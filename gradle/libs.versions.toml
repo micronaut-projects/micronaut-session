@@ -1,0 +1,12 @@
+[versions]
+micronaut = "4.0.0-SNAPSHOT"
+micronaut-docs = "2.0.0"
+micronaut-test = "3.6.2"
+groovy = "4.0.5"
+spock = "2.2-groovy-4.0"
+
+[libraries]
+
+[bundles]
+
+[plugins]

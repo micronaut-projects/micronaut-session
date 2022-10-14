@@ -1,0 +1,1 @@
+By default, Micronaut is a stateless HTTP server, however depending on your application requirements you may need the notion of HTTP sessions.

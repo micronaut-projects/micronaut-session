@@ -1,0 +1,15 @@
+plugins {
+    id "io.micronaut.build.internal.module"
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+}
+
+// Remove once 1.0.0 is released
+micronautBuild {
+    binaryCompatibility {
+        enabled.set(false)
+    }
+}

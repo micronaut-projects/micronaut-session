@@ -1,27 +1,18 @@
 plugins {
-    id "io.micronaut.build.internal.convention-core-library"
+    id "io.micronaut.build.internal.session-module"
 }
 
 dependencies {
-    annotationProcessor project(":inject-java")
-    api project(":runtime")
-    api project(":http")
+    api(mn.micronaut.http)
 
-    compileOnly project(":http-server")
-    compileOnly project(":http-server-netty")
+    implementation(mn.micronaut.cache.caffeine)
+    compileOnly(mn.micronaut.http.server)
+    compileOnly(mn.micronaut.http.server.netty)
 
-    implementation libs.managed.reactor
-    implementation libs.caffeine
+    implementation(mn.reactor)
 
-    testAnnotationProcessor project(":inject-java")
-    testCompileOnly project(":inject-groovy")
-    testImplementation project(":context")
-    testImplementation project(":inject")
-    testImplementation project(":http-netty")
-    testImplementation project(":http-server-netty")
-    testImplementation project(":http-client")
-    testImplementation libs.managed.netty.codec.http
+    testAnnotationProcessor(mn.micronaut.inject.java)
+    testImplementation(mn.micronaut.http.client)
+    testImplementation(mn.micronaut.http.server)
+    testImplementation(mn.micronaut.http.server.netty)
 }
-
-
-//compileTestGroovy.groovyOptions.forkOptions.jvmArgs = ['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005']
