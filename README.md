@@ -4,7 +4,7 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.micronaut.session/micronaut-session.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.micronaut.session%22%20AND%20a:%22micronaut-session%22)
 [![Build Status](https://github.com/micronaut-projects/micronaut-session/workflows/Java%20CI/badge.svg)](https://github.com/micronaut-projects/micronaut-session/actions)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=micronaut-projects_micronaut-template&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=micronaut-projects_micronaut-template)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=micronaut-projects_micronaut-session&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=micronaut-projects_micronaut-session)
 [![Revved up by Gradle Enterprise](https://img.shields.io/badge/Revved%20up%20by-Gradle%20Enterprise-06A0CE?logo=Gradle&labelColor=02303A)](https://ge.micronaut.io/scans)
 
 Support for Http sessions for Micronaut 4+
