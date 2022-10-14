@@ -11,8 +11,8 @@ plugins {
 
 rootProject.name = 'session-parent'
 
-include 'micronaut-session-bom'
-include 'micronaut-session'
+include 'session-bom'
+include 'session'
 
 micronautBuild {
     importMicronautCatalog()
