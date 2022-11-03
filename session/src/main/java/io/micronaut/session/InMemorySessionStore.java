@@ -23,6 +23,8 @@ import com.github.benmanes.caffeine.cache.Scheduler;
 import io.micronaut.context.annotation.Primary;
 import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.core.annotation.Internal;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.session.event.AbstractSessionEvent;
 import io.micronaut.session.event.SessionCreatedEvent;
 import io.micronaut.session.event.SessionDeletedEvent;
 import io.micronaut.session.event.SessionDestroyedEvent;
@@ -44,7 +46,7 @@ import java.util.concurrent.CompletableFuture;
 public class InMemorySessionStore implements SessionStore<InMemorySession> {
 
     private final SessionConfiguration sessionConfiguration;
-    private final ApplicationEventPublisher eventPublisher;
+    private final ApplicationEventPublisher<? super AbstractSessionEvent> eventPublisher;
     private final Cache<String, InMemorySession> sessions;
     private final SessionIdGenerator sessionIdGenerator;
 
@@ -58,7 +60,7 @@ public class InMemorySessionStore implements SessionStore<InMemorySession> {
     public InMemorySessionStore(
         SessionIdGenerator sessionIdGenerator,
         SessionConfiguration sessionConfiguration,
-        ApplicationEventPublisher eventPublisher) {
+        ApplicationEventPublisher<? super AbstractSessionEvent> eventPublisher) {
 
         this.sessionIdGenerator = sessionIdGenerator;
         this.eventPublisher = eventPublisher;
@@ -136,17 +138,17 @@ public class InMemorySessionStore implements SessionStore<InMemorySession> {
     private Expiry<String, InMemorySession> newExpiry() {
         return new Expiry<String, InMemorySession>() {
             @Override
-            public long expireAfterCreate(String key, InMemorySession value, long currentTime) {
+            public long expireAfterCreate(@NonNull String key, @NonNull InMemorySession value, long currentTime) {
                 return newExpiry(value);
             }
 
             @Override
-            public long expireAfterUpdate(String key, InMemorySession value, long currentTime, long currentDuration) {
+            public long expireAfterUpdate(@NonNull String key, @NonNull InMemorySession value, long currentTime, long currentDuration) {
                 return newExpiry(value);
             }
 
             @Override
-            public long expireAfterRead(String key, InMemorySession value, long currentTime, long currentDuration) {
+            public long expireAfterRead(@NonNull String key, @NonNull InMemorySession value, long currentTime, long currentDuration) {
                 return newExpiry(value);
             }
 
@@ -161,17 +163,10 @@ public class InMemorySessionStore implements SessionStore<InMemorySession> {
     private RemovalListener<String, Session> newRemovalListener() {
         return (key, value, cause) -> {
             switch (cause) {
-                case REPLACED:
-                    eventPublisher.publishEvent(new SessionDestroyedEvent(value));
-                    break;
-                case SIZE:
-                case EXPIRED:
-                    eventPublisher.publishEvent(new SessionExpiredEvent(value));
-                    break;
-                case EXPLICIT:
-                    eventPublisher.publishEvent(new SessionDeletedEvent(value));
-                    break;
-                default:
+                case REPLACED -> eventPublisher.publishEvent(new SessionDestroyedEvent(value));
+                case SIZE, EXPIRED -> eventPublisher.publishEvent(new SessionExpiredEvent(value));
+                case EXPLICIT -> eventPublisher.publishEvent(new SessionDeletedEvent(value));
+                default ->
                     throw new IllegalStateException("Session should never be garbage collectable");
             }
         };

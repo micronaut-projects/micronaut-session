@@ -56,15 +56,12 @@ public class SessionWebSocketEventListener implements ApplicationEventListener<W
     public void onApplicationEvent(WebSocketEvent event) {
         if (event instanceof WebSocketMessageProcessedEvent || event instanceof WebSocketSessionClosedEvent) {
             MutableConvertibleValues<Object> attributes = event.getSource().getAttributes();
-            if (attributes instanceof Session) {
-                Session session = (Session) attributes;
-                if (session.isModified()) {
-                    sessionStore.save(session).whenComplete((entries, throwable) -> {
-                        if (throwable != null && LOG.isErrorEnabled()) {
-                            LOG.error("Error persisting session following WebSocket event: " + throwable.getMessage(), throwable);
-                        }
-                    });
-                }
+            if (attributes instanceof Session session && session.isModified()) {
+                sessionStore.save(session).whenComplete((entries, throwable) -> {
+                    if (throwable != null && LOG.isErrorEnabled()) {
+                        LOG.error("Error persisting session following WebSocket event: " + throwable.getMessage(), throwable);
+                    }
+                });
             }
         }
     }
