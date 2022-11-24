@@ -15,6 +15,8 @@
  */
 package io.micronaut.session.docs;
 
+import io.micronaut.serde.annotation.Serdeable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +24,7 @@ import java.util.List;
  * @author graemerocher
  * @since 1.0
  */
+@Serdeable
 public class Cart {
 
     private List<String> items = new ArrayList<>();

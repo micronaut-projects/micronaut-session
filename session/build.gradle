@@ -5,14 +5,16 @@ plugins {
 dependencies {
     api(mn.micronaut.http)
 
-    implementation(mn.micronaut.cache.caffeine)
+    implementation(mnCache.micronaut.cache.caffeine)
     compileOnly(mn.micronaut.http.server)
     compileOnly(mn.micronaut.http.server.netty)
+    compileOnly(mn.micronaut.websocket)
 
     implementation(mn.reactor)
 
     testAnnotationProcessor(mn.micronaut.inject.java)
     testImplementation(mn.micronaut.http.client)
+    testImplementation(mnSerde.micronaut.serde.jackson)
     testImplementation(mn.micronaut.http.server)
     testImplementation(mn.micronaut.http.server.netty)
 }
