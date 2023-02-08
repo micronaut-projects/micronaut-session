@@ -6,8 +6,10 @@ pluginManagement {
 }
 
 plugins {
-    id 'io.micronaut.build.shared.settings' version '6.1.1'
+    id 'io.micronaut.build.shared.settings' version '6.2.1'
 }
+
+enableFeaturePreview 'TYPESAFE_PROJECT_ACCESSORS'
 
 rootProject.name = 'session-parent'
 
@@ -15,6 +17,10 @@ include 'session-bom'
 include 'session'
 
 include 'test-suite-graal'
+
+include 'docs-examples:example-groovy'
+include 'docs-examples:example-java'
+include 'docs-examples:example-kotlin'
 
 micronautBuild {
     addSnapshotRepository()

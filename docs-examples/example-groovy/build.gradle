@@ -1,0 +1,19 @@
+plugins {
+    id 'io.micronaut.build.internal.session-examples'
+    id 'groovy'
+}
+
+dependencies {
+    testAnnotationProcessor(mn.micronaut.inject.groovy)
+
+    testImplementation(projects.session)
+
+    testImplementation mnTest.micronaut.test.spock
+    testImplementation mn.reactor
+    testImplementation(mn.micronaut.http.client)
+    testImplementation(mn.micronaut.http.server)
+    testImplementation(mn.micronaut.http.server.netty)
+    testImplementation(mnSerde.micronaut.serde.jackson)
+
+    testRuntimeOnly mn.logback.classic
+}
