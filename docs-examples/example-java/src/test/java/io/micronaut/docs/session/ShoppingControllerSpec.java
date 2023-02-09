@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ShoppingControllerSpec {
+class ShoppingControllerSpec {
 
     private static EmbeddedServer server;
     private static HttpClient client;
@@ -54,7 +54,7 @@ public class ShoppingControllerSpec {
     }
 
     @Test
-    public void testSessionValueUsedOnReturnValue() {
+    void testSessionValueUsedOnReturnValue() {
         // tag::view[]
         HttpResponse<Cart> response = Flux.from(client.exchange(HttpRequest.GET("/shopping/cart"), Cart.class)) // <1>
             .blockFirst();
