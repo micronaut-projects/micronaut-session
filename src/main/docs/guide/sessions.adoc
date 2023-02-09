@@ -60,7 +60,7 @@ The above configuration enables header resolution, but disables cookie resolutio
 
 A api:session.Session[] can be retrieved with a parameter of type api:session.Session[] in a controller method. For example consider the following controller:
 
-snippet::io.micronaut.docs.session.ShoppingController[tags="imports,class,add,endclass", project-base="docs-examples/example", indent=0]
+snippet::io.micronaut.docs.session.ShoppingController[tags="imports,class,add,endclass", project-base="docs-examples/example"]
 
 <1> `ShoppingController` declares a api:session.Session[] attribute named `cart`
 <2> The api:session.Session[] is declared as a method parameter
