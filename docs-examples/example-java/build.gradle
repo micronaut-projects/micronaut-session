@@ -9,6 +9,7 @@ dependencies {
     testImplementation(projects.session)
 
     testImplementation(mnTest.micronaut.test.junit5)
+    testImplementation libs.junit.jupiter.engine
 
     testImplementation(mn.reactor)
     testImplementation(mn.micronaut.http.client)
