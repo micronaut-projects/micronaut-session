@@ -25,7 +25,7 @@ import io.micronaut.runtime.server.EmbeddedServer
 import reactor.core.publisher.Flux
 import kotlin.test.assertNotNull
 
-class ShoppingControllerSpec: StringSpec() {
+class ShoppingControllerTest: StringSpec() {
 
     val embeddedServer = autoClose(
         ApplicationContext.run(EmbeddedServer::class.java)

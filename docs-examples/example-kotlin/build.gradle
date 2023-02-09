@@ -5,27 +5,16 @@ plugins {
 }
 
 dependencies {
-    kaptTest enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
+    kaptTest enforcedPlatform(mn.micronaut.core.bom)
     kaptTest mn.micronaut.inject.java
 
     testAnnotationProcessor(mn.micronaut.inject.java)
 
-    testImplementation projects.session
-
     testImplementation mnTest.micronaut.test.kotest5
     testImplementation libs.kotlin.test
-
-    testImplementation(mn.reactor)
-    testImplementation(mn.micronaut.http.client)
-    testImplementation(mn.micronaut.http.server)
-    testImplementation(mn.micronaut.http.server.netty)
-    testImplementation(mnSerde.micronaut.serde.jackson)
-
-    testRuntimeOnly mn.logback.classic
 }
 
 test {
-    useJUnitPlatform()
     systemProperties['junit.jupiter.execution.parallel.enabled'] = true
     maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
     forkEvery = 1

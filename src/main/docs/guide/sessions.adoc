@@ -79,7 +79,7 @@ The above method only injects a new api:session.Session[] if one already exists.
 
 If the client is a web browser, sessions should work if cookies are enabled. However, for programmatic HTTP clients you need to propagate the session ID between HTTP calls.
 
-For example, when invoking the `viewCart` method of the `StoreController` in the previous example, the HTTP client receives by default a `AUTHORIZATION_INFO` header. The following example, using a Spock test, demonstrates this:
+For example, when invoking the `viewCart` method of the `StoreController` in the previous example, the HTTP client receives by default a `AUTHORIZATION_INFO` header. The following example demonstrates this:
 
 .Retrieving the AUTHORIZATION_INFO header
 snippet::io.micronaut.docs.session.ShoppingControllerSpec[tags="view", indent=0, project-base="docs-examples/example"]
