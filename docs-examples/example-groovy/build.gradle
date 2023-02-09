@@ -17,3 +17,7 @@ dependencies {
 
     testRuntimeOnly mn.logback.classic
 }
+
+test {
+    useJUnitPlatform()
+}
