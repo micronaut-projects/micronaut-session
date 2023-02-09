@@ -4,10 +4,9 @@ plugins {
 }
 
 dependencies {
-    testAnnotationProcessor(mn.micronaut.inject.groovy)
-
     testImplementation(projects.session)
 
+    testImplementation(mn.micronaut.inject.groovy)
     testImplementation mnTest.micronaut.test.spock
     testImplementation mn.reactor
     testImplementation(mn.micronaut.http.client)
