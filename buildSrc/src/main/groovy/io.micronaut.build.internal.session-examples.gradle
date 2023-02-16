@@ -1,0 +1,20 @@
+plugins {
+    id 'io.micronaut.build.internal.session-base'
+    id 'java'
+}
+
+dependencies {
+    testImplementation(projects.session)
+
+    testImplementation mn.reactor
+    testImplementation(mn.micronaut.http.client)
+    testImplementation(mn.micronaut.http.server)
+    testImplementation(mn.micronaut.http.server.netty)
+    testImplementation(mnSerde.micronaut.serde.jackson)
+
+    testRuntimeOnly mn.logback.classic
+}
+
+test {
+    useJUnitPlatform()
+}
