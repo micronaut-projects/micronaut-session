@@ -1,0 +1,9 @@
+plugins {
+    id 'io.micronaut.build.internal.session-examples'
+    id 'groovy'
+}
+
+dependencies {
+    testImplementation(mn.micronaut.inject.groovy)
+    testImplementation mnTest.micronaut.test.spock
+}
