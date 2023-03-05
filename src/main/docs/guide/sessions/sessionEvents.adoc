@@ -1,0 +1,21 @@
+You can register api:context.event.ApplicationEventListener[] beans to listen for api:session.Session[] related events located in the pkg:session.event[] package.
+
+The following table summarizes the events:
+
+.Session Events
+|===
+|Type|Description
+
+|api:session.event.SessionCreatedEvent[]
+|Fired when a api:session.Session[] is created
+
+|api:session.event.SessionDeletedEvent[]
+|Fired when a api:session.Session[] is deleted
+
+|api:session.event.SessionExpiredEvent[]
+|Fired when a api:session.Session[] expires
+
+|api:session.event.SessionDestroyedEvent[]
+|Parent of both `SessionDeletedEvent` and `SessionExpiredEvent`
+
+|===
