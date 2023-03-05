@@ -16,14 +16,13 @@
 package io.micronaut.session.http;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.cookie.Cookie;
 import io.micronaut.session.Session;
 import io.micronaut.session.SessionSettings;
 import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.validation.constraints.NotNull;
 import java.util.Base64;
 
 /**
@@ -68,7 +67,8 @@ public class CookieHttpSessionIdGenerator {
      * @param cookie A Cookie
      * @return A session id from a cookie value
      */
-    public @NotNull String sessionIdFromCookie(@NotNull Cookie cookie) {
+    @NonNull
+    public String sessionIdFromCookie(@NonNull Cookie cookie) {
         String id = cookie.getValue();
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("cookie value: {}", id);
@@ -88,7 +88,8 @@ public class CookieHttpSessionIdGenerator {
      * @param session The session
      * @return Cookie value from session.
      */
-    public @NotNull String cookieValueFromSession(@NotNull Session session) {
+    @NonNull
+    public String cookieValueFromSession(@NonNull Session session) {
         String id = session.getId();
         if (getPrefix() != null) {
             id = getPrefix() + id;
