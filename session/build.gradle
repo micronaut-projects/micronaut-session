@@ -3,6 +3,9 @@ plugins {
 }
 
 dependencies {
+    annotationProcessor(mnValidation.micronaut.validation.processor)
+    implementation(mnValidation.micronaut.validation)
+
     api(mn.micronaut.http)
 
     implementation(mnCache.micronaut.cache.caffeine)

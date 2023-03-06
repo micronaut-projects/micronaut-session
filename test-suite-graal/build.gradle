@@ -12,7 +12,7 @@ dependencies {
     api(mn.micronaut.http)
 
     testAnnotationProcessor(mn.micronaut.inject.java)
-    testImplementation(project(":session"))
+    testImplementation(projects.micronautSession)
     testImplementation(mn.reactor)
     testImplementation(mn.micronaut.graal)
     testImplementation(mn.micronaut.http.client)
