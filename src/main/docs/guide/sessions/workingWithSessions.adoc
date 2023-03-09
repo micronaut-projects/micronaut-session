@@ -1,0 +1,16 @@
+A api:session.Session[] can be retrieved with a parameter of type api:session.Session[] in a controller method. For example consider the following controller:
+
+snippet::io.micronaut.docs.session.ShoppingController[tags="imports,class,add,endclass", project-base="docs-examples/example"]
+
+<1> `ShoppingController` declares a api:session.Session[] attribute named `cart`
+<2> The api:session.Session[] is declared as a method parameter
+<3> The `cart` attribute is retrieved
+<4> Otherwise a new `Cart` instance is created and stored in the session
+
+Note that because the api:session.Session[] is declared as a required parameter, to execute the controller action a api:session.Session[] will be created and saved to the api:session.SessionStore[].
+
+If you don't want to create unnecessary sessions, declare the api:session.Session[] as `@Nullable` in which case a session will not be created and saved unnecessarily. For example:
+
+snippet::io.micronaut.docs.session.ShoppingController[tags="clear", indent=0,title="Using @Nullable with Sessions", project-base="docs-examples/example"]
+
+The above method only injects a new api:session.Session[] if one already exists.

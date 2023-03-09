@@ -1,0 +1,6 @@
+Rather than explicitly injecting the api:session.Session[] into a controller method, you can instead use ann:session.annotation.SessionValue[]. For example:
+
+snippet::io.micronaut.docs.session.ShoppingController[tags="view", indent=0,title="Using @SessionValue", project-base="docs-examples/example"]
+
+<1> ann:session.annotation.SessionValue[] is declared on the method resulting in the return value being stored in the api:session.Session[]. Note that you must specify the attribute name when used on a return value
+<2> ann:session.annotation.SessionValue[] is used on a `@Nullable` parameter which results in looking up the value from the api:session.Session[] in a non-blocking way and supplying it if present. In the case a value is not specified to ann:session.annotation.SessionValue[] resulting in the parameter name being used to lookup the attribute.

@@ -1,0 +1,17 @@
+api:session.Session[] resolution can be configured with api:session.http.HttpSessionConfiguration[].
+
+By default, sessions are resolved using an api:session.http.HttpSessionFilter[] that looks for session identifiers via either an HTTP header (using the `Authorization-Info` or `X-Auth-Token` headers) or via a Cookie named `SESSION`.
+
+You can disable either header resolution or cookie resolution via configuration in the application configuration file:
+
+.Disabling Cookie Resolution
+[configuration]
+----
+micronaut:
+  session:
+    http:
+      cookie: false
+      header: true
+----
+
+The above configuration enables header resolution, but disables cookie resolution. You can also configure header and cookie names.

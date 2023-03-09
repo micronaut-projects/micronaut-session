@@ -1,0 +1,17 @@
+If the client is a web browser, sessions should work if cookies are enabled. However, for programmatic HTTP clients you need to propagate the session ID between HTTP calls.
+
+For example, when invoking the `viewCart` method of the `StoreController` in the previous example, the HTTP client receives by default a `AUTHORIZATION_INFO` header. The following example demonstrates this:
+
+.Retrieving the AUTHORIZATION_INFO header
+snippet::io.micronaut.docs.session.ShoppingControllerSpec[tags="view", indent=0, project-base="docs-examples/example"]
+
+<1> A request is made to `/shopping/cart`
+<2> The `AUTHORIZATION_INFO` header is present in the response
+
+You can then pass this `AUTHORIZATION_INFO` in subsequent requests to reuse the existing api:session.Session[]:
+
+.Sending the AUTHORIZATION_INFO header
+snippet::io.micronaut.docs.session.ShoppingControllerSpec[tags="add", indent=0, project-base="docs-examples/example"]
+
+<1> The `AUTHORIZATION_INFO` is retrieved from the response
+<2> And then sent as a header in the subsequent request

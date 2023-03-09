@@ -1,5 +1,13 @@
 introduction:
   title: Introduction
-sessions: Http Sessions
+sessions:
+  title: Http Sessions
+  enablingSessions: Enabling Sessions
+  redisSessions: Redis Sessions
+  configuringSessionResolution: Configuring Session Resolution
+  workingWithSessions: Working with Sessions
+  sessionClients: Session Clients
+  sessionValue: Using @SessionValue
+  sessionEvents: Session Events
 releaseHistory: Release History
 repository: Repository
