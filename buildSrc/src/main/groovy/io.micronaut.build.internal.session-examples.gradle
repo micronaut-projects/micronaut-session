@@ -4,7 +4,10 @@ plugins {
 }
 
 dependencies {
-    testImplementation(projects.session)
+    testAnnotationProcessor(mnValidation.micronaut.validation.processor)
+    testImplementation(mnValidation.micronaut.validation)
+
+    testImplementation(projects.micronautSession)
 
     testImplementation mn.reactor
     testImplementation(mn.micronaut.http.client)
