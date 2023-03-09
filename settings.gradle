@@ -28,5 +28,4 @@ micronautBuild {
     importMicronautCatalog()
     importMicronautCatalog("micronaut-cache")
     importMicronautCatalog("micronaut-serde")
-    importMicronautCatalog("micronaut-validation")
 }
