@@ -22,8 +22,6 @@ import io.micronaut.http.annotation.Post;
 import io.micronaut.session.Session;
 import io.micronaut.session.annotation.SessionValue;
 import io.micronaut.core.annotation.Nullable;
-
-import javax.validation.constraints.NotBlank;
 // end::imports[]
 
 // tag::class[]
@@ -45,7 +43,7 @@ public class ShoppingController {
 
     // tag::add[]
     @Post("/cart/{name}")
-    Cart addItem(Session session, @NotBlank String name) { // <2>
+    Cart addItem(Session session, String name) { // <2>
         Cart cart = session.get(ATTR_CART, Cart.class).orElseGet(() -> { // <3>
             Cart newCart = new Cart();
             session.put(ATTR_CART, newCart); // <4>
