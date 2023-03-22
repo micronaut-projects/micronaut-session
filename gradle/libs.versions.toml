@@ -1,11 +1,11 @@
 [versions]
 micronaut = "4.0.0-M1"
-micronaut-cache = "4.0.0-SNAPSHOT"
+micronaut-cache = "4.0.0-M1"
 micronaut-docs = "2.0.0"
-micronaut-serde = "2.0.0-SNAPSHOT"
+micronaut-serde = "2.0.0-M1"
 micronaut-test = "4.0.0-SNAPSHOT"
 
-groovy = "4.0.9"
+groovy = "4.0.10"
 junit = '5.9.2'
 kotest = '5.5.5'
 kotlin = '1.8.10'
