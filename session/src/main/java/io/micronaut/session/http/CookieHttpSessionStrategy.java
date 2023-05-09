@@ -77,7 +77,7 @@ public class CookieHttpSessionStrategy implements HttpSessionIdStrategy {
                 Cookie cookie = entry.getValue();
                 String id = cookieHttpSessionIdGenerator.sessionIdFromCookie(cookie);
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("path {}, session id: {}", id, message.getPath());
+                    LOGGER.debug("path {}, session id: {}", message.getPath(), id);
                 }
                 resolvedIds.add(id);
             }
