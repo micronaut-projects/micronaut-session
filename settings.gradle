@@ -23,6 +23,7 @@ include 'docs-examples:example-java'
 include 'docs-examples:example-kotlin'
 
 micronautBuild {
+    importMicronautCatalog("micronaut-logging")
     useStandardizedProjectNames = true
     importMicronautCatalog()
     importMicronautCatalog("micronaut-cache")
