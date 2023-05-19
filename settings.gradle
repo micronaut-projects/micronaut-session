@@ -24,7 +24,6 @@ include 'docs-examples:example-kotlin'
 
 micronautBuild {
     useStandardizedProjectNames = true
-    addSnapshotRepository()
     importMicronautCatalog()
     importMicronautCatalog("micronaut-cache")
     importMicronautCatalog("micronaut-serde")
