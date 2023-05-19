@@ -1,9 +1,9 @@
 [versions]
-micronaut = "4.0.0-M2"
-micronaut-cache = "4.0.0-M1"
+micronaut = "4.0.0-M4"
+micronaut-cache = "4.0.0-M2"
 micronaut-docs = "2.0.0"
-micronaut-serde = "2.0.0-M3"
-micronaut-test = "4.0.0-M2"
+micronaut-serde = "2.0.0-M7"
+micronaut-test = "4.0.0-M3"
 
 groovy = "4.0.11"
 junit = '5.9.3'
@@ -11,7 +11,9 @@ kotest = '5.6.2'
 kotlin = '1.8.21'
 spock = "2.3-groovy-4.0"
 
+micronaut-logging = "1.0.0-M2"
 [libraries]
+micronaut-logging = { module = "io.micronaut.logging:micronaut-logging-bom", version.ref = "micronaut-logging" }
 micronaut-cache = { module = "io.micronaut.cache:micronaut-cache-bom", version.ref = "micronaut-cache" }
 micronaut-serde = { module = "io.micronaut.serde:micronaut-serde-bom", version.ref = "micronaut-serde" }
 
