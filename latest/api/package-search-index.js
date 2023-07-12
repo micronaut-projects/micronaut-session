@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"io.micronaut.session"},{"l":"io.micronaut.session.annotation"},{"l":"io.micronaut.session.binder"},{"l":"io.micronaut.session.event"},{"l":"io.micronaut.session.http"},{"l":"io.micronaut.session.websocket"}];updateSearchResults();
