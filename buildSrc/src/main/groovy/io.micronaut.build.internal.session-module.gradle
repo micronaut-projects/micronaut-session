@@ -2,10 +2,3 @@ plugins {
     id 'io.micronaut.build.internal.session-base'
     id "io.micronaut.build.internal.module"
 }
-
-// Remove once 1.0.0 is released
-micronautBuild {
-    binaryCompatibility {
-        enabled.set(false)
-    }
-}
