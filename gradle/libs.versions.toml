@@ -11,7 +11,7 @@ kotest = '5.7.2'
 kotlin = '1.9.10'
 spock = "2.3-groovy-4.0"
 
-micronaut-logging = "1.0.0"
+micronaut-logging = "1.1.2"
 [libraries]
 # Core
 micronaut-core = { module = 'io.micronaut:micronaut-core-bom', version.ref = 'micronaut' }
