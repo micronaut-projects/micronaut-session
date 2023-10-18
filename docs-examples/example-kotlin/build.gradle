@@ -20,9 +20,8 @@ test {
     forkEvery = 1
 }
 
-compileTestKotlin {
-    kotlinOptions {
-        jvmTarget = '17'
-        javaParameters = true
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
     }
 }
