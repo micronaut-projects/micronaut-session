@@ -6,7 +6,7 @@ pluginManagement {
 }
 
 plugins {
-    id 'io.micronaut.build.shared.settings' version '6.5.7'
+    id 'io.micronaut.build.shared.settings' version '6.6.0'
 }
 
 enableFeaturePreview 'TYPESAFE_PROJECT_ACCESSORS'
@@ -23,7 +23,6 @@ include 'docs-examples:example-java'
 include 'docs-examples:example-kotlin'
 
 micronautBuild {
-    importMicronautCatalog("micronaut-logging")
     useStandardizedProjectNames = true
     importMicronautCatalog()
     importMicronautCatalog("micronaut-cache")
