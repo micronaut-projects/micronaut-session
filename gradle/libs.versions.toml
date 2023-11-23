@@ -9,7 +9,7 @@ micronaut-test = "4.0.0"
 groovy = "4.0.13"
 junit = '5.10.1'
 kotest = '5.8.0'
-kotlin = '1.9.20'
+kotlin = '1.9.21'
 spock = "2.3-groovy-4.0"
 
 [libraries]
