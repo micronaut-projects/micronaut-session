@@ -24,6 +24,7 @@ import io.micronaut.http.cookie.SameSite
 import io.micronaut.http.netty.cookies.NettyCookie
 import io.micronaut.http.server.HttpServerConfiguration
 import io.micronaut.http.server.netty.NettyHttpRequest
+import io.micronaut.http.server.netty.body.ByteBody
 import io.micronaut.session.Session
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.http.DefaultFullHttpRequest
@@ -48,7 +49,7 @@ class CookieHttpSessionStrategySpec extends Specification {
         CookieEncoder encoder = ServerCookieEncoder.STRICT
         def encoded = encoder.encode(((NettyCookie) Cookie.of(HttpSessionConfiguration.DEFAULT_COOKIENAME, new String(Base64.encoder.encode("1234".bytes)))).getNettyCookie())
         nettyRequest.headers().add(HttpHeaders.COOKIE, encoded)
-        HttpRequest request = new NettyHttpRequest(nettyRequest, Mock(ChannelHandlerContext), ConversionService.SHARED, new HttpServerConfiguration())
+        HttpRequest request = new NettyHttpRequest(nettyRequest, null, Mock(ChannelHandlerContext), ConversionService.SHARED, new HttpServerConfiguration())
 
         expect:
         strategy.resolveIds(request) == ['1234']
