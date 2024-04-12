@@ -1,6 +1,6 @@
 [versions]
 micronaut = "4.4.1"
-micronaut-cache = "4.2.2"
+micronaut-cache = "4.3.0"
 micronaut-docs = "2.0.0"
 micronaut-logging = "1.1.2"
 micronaut-serde = "2.9.0"
