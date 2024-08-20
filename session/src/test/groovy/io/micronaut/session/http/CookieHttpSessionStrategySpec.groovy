@@ -24,7 +24,6 @@ import io.micronaut.http.cookie.SameSite
 import io.micronaut.http.netty.cookies.NettyCookie
 import io.micronaut.http.server.HttpServerConfiguration
 import io.micronaut.http.server.netty.NettyHttpRequest
-import io.micronaut.http.server.netty.body.ByteBody
 import io.micronaut.session.Session
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.http.DefaultFullHttpRequest
