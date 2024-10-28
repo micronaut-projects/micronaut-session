@@ -1,23 +1,32 @@
 package io.micronaut.session.http
 
-import io.micronaut.context.ApplicationContext
+import io.micronaut.context.annotation.Property
+import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import jakarta.inject.Inject
 import spock.lang.Specification
-
 import java.time.temporal.ChronoUnit
+import java.time.temporal.TemporalAmount
 
+@Property(name = 'micronaut.session.http.cookie-max-age', value = '365d')
+@MicronautTest(startApplication = false)
 class HttpSessionConfigurationSpec extends Specification {
 
+    @Inject
+    HttpSessionConfiguration configuration
     void "test configuring max age"() {
         given:
-        ApplicationContext ctx = ApplicationContext.run('micronaut.session.http.cookie-max-age': '365d')
+        long expected = 365L
 
-        expect:
-            ctx.getBean(HttpSessionConfiguration)
-            .getCookieMaxAge()
-            .get()
-            .get(ChronoUnit.SECONDS) == 365 * 24 * 60 * 60
+        when:
+        Optional<TemporalAmount> temporalAmountOptional = configuration.getCookieMaxAge()
 
-        cleanup:
-        ctx.close()
+        then:
+        temporalAmountOptional.isPresent()
+
+        when:
+        TemporalAmount temporalAmount = temporalAmountOptional.get()
+
+        then:
+        expected == temporalAmount.get(ChronoUnit.DAYS)
     }
 }
