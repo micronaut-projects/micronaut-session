@@ -41,7 +41,7 @@ class MalformedSessionCookieValueTest {
         @Get
         @Status(HttpStatus.ACCEPTED)
         void index() {
-
+            // no-op
         }
     }
 }
