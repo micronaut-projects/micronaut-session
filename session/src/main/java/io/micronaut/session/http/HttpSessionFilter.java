@@ -88,10 +88,9 @@ public class HttpSessionFilter implements HttpServerFilter {
                 List<String> ids = resolver.resolveIds(request);
                 if (CollectionUtils.isNotEmpty(ids)) {
                     String id = ids.get(0);
-                    Publisher<Optional<Session>> sessionLookup = Publishers.fromCompletableFuture(() -> sessionStore.findSession(id));
-                    Flux<MutableHttpResponse<?>> storeSessionInAttributes = Flux
-                            .from(sessionLookup)
-                            .switchMap(session -> {
+                    Mono<MutableHttpResponse<?>> storeSessionInAttributes = Mono
+                            .fromFuture(() -> sessionStore.findSession(id)))
+                            .map(session -> {
                                 session.ifPresent(entries -> request.getAttributes().put(SESSION_ATTRIBUTE, entries));
                                 return chain.proceed(request);
                             });
