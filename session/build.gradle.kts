@@ -1,5 +1,5 @@
 plugins {
-    id "io.micronaut.build.internal.session-module"
+    id("io.micronaut.build.internal.session-module")
 }
 
 dependencies {
@@ -17,4 +17,8 @@ dependencies {
     testImplementation(mnSerde.micronaut.serde.jackson)
     testImplementation(mn.micronaut.http.server)
     testImplementation(mn.micronaut.http.server.netty)
+
+    testImplementation(mnTest.micronaut.test.junit5)
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(mnLogging.logback.classic)
 }

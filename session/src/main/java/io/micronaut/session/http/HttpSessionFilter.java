@@ -20,8 +20,10 @@ import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.HttpAttributes;
 import io.micronaut.http.HttpRequest;
+import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Filter;
+import io.micronaut.http.exceptions.HttpStatusException;
 import io.micronaut.http.filter.HttpServerFilter;
 import io.micronaut.http.filter.ServerFilterChain;
 import io.micronaut.http.filter.ServerFilterPhase;
@@ -81,19 +83,23 @@ public class HttpSessionFilter implements HttpServerFilter {
     @Override
     public Publisher<MutableHttpResponse<?>> doFilter(HttpRequest<?> request, ServerFilterChain chain) {
         request.setAttribute(HttpSessionFilter.class.getName(), true);
-        for (HttpSessionIdResolver resolver : resolvers) {
-            List<String> ids = resolver.resolveIds(request);
-            if (CollectionUtils.isNotEmpty(ids)) {
-                String id = ids.get(0);
-                Publisher<Optional<Session>> sessionLookup = Publishers.fromCompletableFuture(() -> sessionStore.findSession(id));
-                Flux<MutableHttpResponse<?>> storeSessionInAttributes = Flux
-                    .from(sessionLookup)
-                    .switchMap(session -> {
-                        session.ifPresent(entries -> request.getAttributes().put(SESSION_ATTRIBUTE, entries));
-                        return chain.proceed(request);
-                    });
-                return encodeSessionId(request, storeSessionInAttributes);
+        try {
+            for (HttpSessionIdResolver resolver : resolvers) {
+                List<String> ids = resolver.resolveIds(request);
+                if (CollectionUtils.isNotEmpty(ids)) {
+                    String id = ids.get(0);
+                    Publisher<Optional<Session>> sessionLookup = Publishers.fromCompletableFuture(() -> sessionStore.findSession(id));
+                    Flux<MutableHttpResponse<?>> storeSessionInAttributes = Flux
+                            .from(sessionLookup)
+                            .switchMap(session -> {
+                                session.ifPresent(entries -> request.getAttributes().put(SESSION_ATTRIBUTE, entries));
+                                return chain.proceed(request);
+                            });
+                    return encodeSessionId(request, storeSessionInAttributes);
+                }
             }
+        } catch (IllegalArgumentException e) {
+            return Flux.error(new HttpStatusException(HttpStatus.BAD_REQUEST, e.getMessage()));
         }
         return encodeSessionId(request, chain.proceed(request));
     }
