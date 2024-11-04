@@ -34,7 +34,7 @@ import io.micronaut.session.SessionStore;
 import io.micronaut.session.annotation.SessionValue;
 import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
-
+import io.micronaut.http.filter.FilterPatternStyle;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +45,8 @@ import java.util.Optional;
  * @author Graeme Rocher
  * @since 1.0
  */
-@Filter("/**")
+
+@Filter(patternStyle = FilterPatternStyle.REGEX, value = "${http.session.filter.regex-pattern:/.*}")
 public class HttpSessionFilter implements HttpServerFilter {
 
     /**
@@ -57,7 +58,7 @@ public class HttpSessionFilter implements HttpServerFilter {
      * Constant for Micronaut SESSION attribute.
      */
     public static final CharSequence SESSION_ATTRIBUTE = "micronaut.SESSION";
-
+    private final HttpSessionFilterConfiguration config;
     private final SessionStore<Session> sessionStore;
     private final HttpSessionIdResolver[] resolvers;
     private final HttpSessionIdEncoder[] encoders;
@@ -68,11 +69,13 @@ public class HttpSessionFilter implements HttpServerFilter {
      * @param sessionStore The session store
      * @param resolvers The HTTP session id resolvers
      * @param encoders The HTTP session id encoders
+     * @param config  the configuration for the HttpSessionFilter
      */
-    public HttpSessionFilter(SessionStore<Session> sessionStore, HttpSessionIdResolver[] resolvers, HttpSessionIdEncoder[] encoders) {
+    public HttpSessionFilter(SessionStore<Session> sessionStore, HttpSessionIdResolver[] resolvers, HttpSessionIdEncoder[] encoders, HttpSessionFilterConfiguration config) {
         this.sessionStore = sessionStore;
         this.resolvers = resolvers;
         this.encoders = encoders;
+        this.config = config;
     }
 
     @Override
@@ -82,6 +85,9 @@ public class HttpSessionFilter implements HttpServerFilter {
 
     @Override
     public Publisher<MutableHttpResponse<?>> doFilter(HttpRequest<?> request, ServerFilterChain chain) {
+        if (!request.getUri().getPath().matches(config.getRegexPattern())) {
+            return chain.proceed(request);
+        }
         request.setAttribute(HttpSessionFilter.class.getName(), true);
         try {
             for (HttpSessionIdResolver resolver : resolvers) {
