@@ -45,9 +45,8 @@ import java.util.Optional;
  * @author Graeme Rocher
  * @since 1.0
  */
-@Filter("/**")
+@Filter("${micronaut.session.filter.exclude-pattern:/**}")
 public class HttpSessionFilter implements HttpServerFilter {
-
     /**
      * The order of the filter.
      */
@@ -61,6 +60,7 @@ public class HttpSessionFilter implements HttpServerFilter {
     private final SessionStore<Session> sessionStore;
     private final HttpSessionIdResolver[] resolvers;
     private final HttpSessionIdEncoder[] encoders;
+    private final HttpSessionFilterConfiguration configuration;
 
     /**
      * Constructor.
@@ -69,10 +69,11 @@ public class HttpSessionFilter implements HttpServerFilter {
      * @param resolvers The HTTP session id resolvers
      * @param encoders The HTTP session id encoders
      */
-    public HttpSessionFilter(SessionStore<Session> sessionStore, HttpSessionIdResolver[] resolvers, HttpSessionIdEncoder[] encoders) {
+    public HttpSessionFilter(SessionStore<Session> sessionStore, HttpSessionIdResolver[] resolvers, HttpSessionIdEncoder[] encoders, HttpSessionFilterConfiguration configuration) {
         this.sessionStore = sessionStore;
         this.resolvers = resolvers;
         this.encoders = encoders;
+        this.configuration = configuration;
     }
 
     @Override
@@ -90,11 +91,11 @@ public class HttpSessionFilter implements HttpServerFilter {
                     String id = ids.get(0);
                     Publisher<Optional<Session>> sessionLookup = Publishers.fromCompletableFuture(() -> sessionStore.findSession(id));
                     Flux<MutableHttpResponse<?>> storeSessionInAttributes = Flux
-                            .from(sessionLookup)
-                            .switchMap(session -> {
-                                session.ifPresent(entries -> request.getAttributes().put(SESSION_ATTRIBUTE, entries));
-                                return chain.proceed(request);
-                            });
+                        .from(sessionLookup)
+                        .switchMap(session -> {
+                            session.ifPresent(entries -> request.getAttributes().put(SESSION_ATTRIBUTE, entries));
+                            return chain.proceed(request);
+                        });
                     return encodeSessionId(request, storeSessionInAttributes);
                 }
             }
@@ -134,7 +135,7 @@ public class HttpSessionFilter implements HttpServerFilter {
                 if (opt.isPresent()) {
                     Session session = opt.get();
                     if (sessionAttr != null) {
-                       session.put(sessionAttr, body.get());
+                        session.put(sessionAttr, body.get());
                     }
 
                     if (session.isNew() || session.isModified()) {
@@ -145,8 +146,8 @@ public class HttpSessionFilter implements HttpServerFilter {
                     Session newSession = sessionStore.newSession();
                     newSession.put(sessionAttr, body.get());
                     return Flux
-                            .from(Publishers.fromCompletableFuture(() -> sessionStore.save(newSession)))
-                            .map(s -> new SessionAndResponse(Optional.of(s), response));
+                        .from(Publishers.fromCompletableFuture(() -> sessionStore.save(newSession)))
+                        .map(s -> new SessionAndResponse(Optional.of(s), response));
                 }
                 return Flux.just(new SessionAndResponse(opt, response));
             });
