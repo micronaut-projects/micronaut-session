@@ -53,6 +53,7 @@ public  class HttpSessionFilterConfiguration {
      *                     Default is "/.*", which matches all paths.
      */
     public void setRegexPattern(String regexPattern) {
-        this.regexPattern = regexPattern;
+        this.regexPattern = (regexPattern != null) ? regexPattern : "/.*";
+
     }
 }
