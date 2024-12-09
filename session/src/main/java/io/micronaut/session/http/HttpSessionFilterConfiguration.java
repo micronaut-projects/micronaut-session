@@ -17,14 +17,41 @@ package io.micronaut.session.http;
 
 import io.micronaut.context.annotation.ConfigurationProperties;
 
+/**
+ * Configuration class for the HTTP session filter.
+ * <p>
+ * This class allows configuration of the pattern for excluding certain paths
+ * from session filtering in Micronaut applications.
+ * </p>
+ */
 @ConfigurationProperties("micronaut.session.filter")
 public class HttpSessionFilterConfiguration {
     private String excludePattern = "/**";
 
+    /**
+     * Returns the exclude pattern used to filter certain paths from session handling.
+     * <p>
+     * Subclasses can override this method to provide a different exclude pattern if needed.
+     * Be sure that the pattern follows the expected syntax and does not conflict with
+     * other filters or session configurations.
+     * </p>
+     *
+     * @return the exclude pattern
+     */
     public String getExcludePattern() {
         return excludePattern;
     }
 
+    /**
+     * Sets the exclude pattern used to filter certain paths from session handling.
+     * <p>
+     * This method can be overridden by subclasses to customize the exclude pattern.
+     * When overriding this method, ensure that the pattern is compatible with other
+     * session filtering configurations, and that it does not conflict with other filters.
+     * </p>
+     *
+     * @param excludePattern the exclude pattern to set
+     */
     public void setExcludePattern(String excludePattern) {
         this.excludePattern = excludePattern;
     }
