@@ -15,6 +15,7 @@
  */
 package io.micronaut.session.http;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.async.publisher.Publishers;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.core.util.StringUtils;
@@ -24,6 +25,7 @@ import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Filter;
 import io.micronaut.http.exceptions.HttpStatusException;
+import io.micronaut.http.filter.FilterPatternStyle;
 import io.micronaut.http.filter.HttpServerFilter;
 import io.micronaut.http.filter.ServerFilterChain;
 import io.micronaut.http.filter.ServerFilterPhase;
@@ -45,7 +47,9 @@ import java.util.Optional;
  * @author Graeme Rocher
  * @since 1.0
  */
-@Filter("${" + HttpSessionFilterConfigurationProperties.PATH_PROPERTY + ":" + HttpSessionFilterConfigurationProperties.DEFAULT_PATH + "}")
+@Requires(property = HttpSessionFilterConfigurationProperties.PROPERTY_ENABLED, notEquals = StringUtils.FALSE, defaultValue = StringUtils.TRUE)
+@Filter(patternStyle = FilterPatternStyle.REGEX,
+        value = "${" + HttpSessionFilterConfigurationProperties.PROPERTY_REGEX_PATTERN + ":" + HttpSessionFilterConfigurationProperties.DEFAULT_REGEX_PATTERN + "}")
 public class HttpSessionFilter implements HttpServerFilter {
     /**
      * The order of the filter.

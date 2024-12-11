@@ -16,16 +16,17 @@
 package io.micronaut.session.http;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.Toggleable;
 
 /**
  * Configuration {@link HttpSessionFilter}.
  * @author Sergio del Amo
  * @since 4.6.0
  */
-public interface HttpSessionFilterConfiguration {
+public interface HttpSessionFilterConfiguration extends Toggleable {
     /**
-     * @return Pattern the {@link HttpSessionFilter} should match.
+     * @return Regular Expression Pattern the {@link HttpSessionFilter} should match.
      */
     @NonNull
-    String getPath();
+    String getRegexPattern();
 }

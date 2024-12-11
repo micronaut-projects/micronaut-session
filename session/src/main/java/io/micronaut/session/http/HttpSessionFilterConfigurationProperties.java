@@ -32,22 +32,53 @@ class HttpSessionFilterConfigurationProperties implements HttpSessionFilterConfi
      */
     @SuppressWarnings("WeakerAccess")
     public static final String PREFIX = SessionSettings.PREFIX + ".filter";
-    public static final String PATH_PROPERTY = PREFIX + ".path";
-    public static final String DEFAULT_PATH = "/**";
-    private String path = DEFAULT_PATH;
+
+    /**
+     * The default enable value.
+     */
+    @SuppressWarnings("WeakerAccess")
+    public static final boolean DEFAULT_ENABLED = true;
+    public static final String PROPERTY_ENABLED = PREFIX + ".enabled";
+    public static final String PROPERTY_REGEX_PATTERN = PREFIX + ".regex-pattern";
+
+    /**
+     * The default regex pattern.
+     */
+    @SuppressWarnings("WeakerAccess")
+    public static final String  DEFAULT_REGEX_PATTERN = "^.*$";
+
+    private String regexPattern = DEFAULT_REGEX_PATTERN;
+    private boolean enabled = DEFAULT_ENABLED;
 
     @Override
     @NonNull
-    public String getPath() {
-        return path;
+    public String getRegexPattern() {
+        return regexPattern;
     }
 
     /**
-     * Pattern the {@link HttpSessionFilter} should match. Default value {@value #DEFAULT_PATH}.
+     * Pattern the {@link HttpSessionFilter} should match. Default value {@value #DEFAULT_REGEX_PATTERN}.
      *
-     * @param path the exclude pattern to set
+     * @param regexPattern the exclude pattern to set
      */
-    public void setPath(String path) {
-        this.path = path;
+    public void setRegexPattern(String regexPattern) {
+        this.regexPattern = regexPattern;
+    }
+
+    /**
+     * Whether the {@link HttpSessionFilter} is enabled. Default value {@value #DEFAULT_ENABLED}
+     * @return true if you want to enable the {@link HttpSessionFilter}
+     */
+    @Override
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+
+    /**
+     * Enables {@link HttpSessionFilter}. Default value {@value #DEFAULT_ENABLED}
+     * @param enabled True if it is enabled
+     */
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }
