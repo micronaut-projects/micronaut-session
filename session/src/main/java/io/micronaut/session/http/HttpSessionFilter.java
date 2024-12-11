@@ -45,7 +45,7 @@ import java.util.Optional;
  * @author Graeme Rocher
  * @since 1.0
  */
-@Filter("${micronaut.session.filter.exclude-pattern:/**}")
+@Filter("${" + HttpSessionFilterConfigurationProperties.PATH_PROPERTY + ":" + HttpSessionFilterConfigurationProperties.DEFAULT_PATH + "}")
 public class HttpSessionFilter implements HttpServerFilter {
     /**
      * The order of the filter.

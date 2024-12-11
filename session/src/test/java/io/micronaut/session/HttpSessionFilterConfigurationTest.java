@@ -17,14 +17,14 @@ class HttpSessionFilterConfigurationTest {
 
     @Test
     void testDefaultConfiguration() {
-        assertEquals("/**", configuration.getExcludePattern(),
+        assertEquals("/**", configuration.getPath(),
             "Default exclude pattern should be '/**'");
     }
 
     @Test
     @Property(name = "micronaut.session.filter.exclude-pattern", value = "/static/**,/public/**")
     void testMultipleExclusionPatterns() {
-        assertEquals("/static/**,/public/**", configuration.getExcludePattern());
+        assertEquals("/static/**,/public/**", configuration.getPath());
         assertTrue(matchesExcludePattern("/static/image.jpg"), "Static path should be excluded");
         assertTrue(matchesExcludePattern("/public/script.js"), "Public path should be excluded");
         assertFalse(matchesExcludePattern("/api/users"), "API path shouldn't be excluded");
@@ -34,7 +34,7 @@ class HttpSessionFilterConfigurationTest {
     @Test
     @Property(name = "micronaut.session.filter.exclude-pattern", value = "/admin/**")
     void testSingleExclusionPattern() {
-        assertEquals("/admin/**", configuration.getExcludePattern());
+        assertEquals("/admin/**", configuration.getPath());
 
         assertTrue(matchesExcludePattern("/admin/users"), "Admin path should be excluded");
         assertTrue(matchesExcludePattern("/admin/settings"), "Admin path should be excluded");
@@ -44,17 +44,17 @@ class HttpSessionFilterConfigurationTest {
     @Test
     @Property(name = "micronaut.session.filter.exclude-pattern", value = "")
     void testEmptyExclusionPattern() {
-        assertEquals("", configuration.getExcludePattern());
+        assertEquals("", configuration.getPath());
         assertFalse(matchesExcludePattern("/any/path"), "No path should match empty pattern");
     }
 
 
     private boolean matchesExcludePattern(String path) {
-        if (configuration.getExcludePattern() == null || configuration.getExcludePattern().isEmpty()) {
+        if (configuration.getPath() == null || configuration.getPath().isEmpty()) {
             return false;
         }
 
-        String[] patterns = configuration.getExcludePattern().split(",");
+        String[] patterns = configuration.getPath().split(",");
         for (String pattern : patterns) {
             if (pathMatches(pattern.trim(), path)) {
                 return true;
