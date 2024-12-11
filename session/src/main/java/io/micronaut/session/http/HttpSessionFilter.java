@@ -60,7 +60,6 @@ public class HttpSessionFilter implements HttpServerFilter {
     private final SessionStore<Session> sessionStore;
     private final HttpSessionIdResolver[] resolvers;
     private final HttpSessionIdEncoder[] encoders;
-    private final HttpSessionFilterConfiguration configuration;
 
     /**
      * Constructor.
@@ -69,11 +68,10 @@ public class HttpSessionFilter implements HttpServerFilter {
      * @param resolvers The HTTP session id resolvers
      * @param encoders The HTTP session id encoders
      */
-    public HttpSessionFilter(SessionStore<Session> sessionStore, HttpSessionIdResolver[] resolvers, HttpSessionIdEncoder[] encoders, HttpSessionFilterConfiguration configuration) {
+    public HttpSessionFilter(SessionStore<Session> sessionStore, HttpSessionIdResolver[] resolvers, HttpSessionIdEncoder[] encoders) {
         this.sessionStore = sessionStore;
         this.resolvers = resolvers;
         this.encoders = encoders;
-        this.configuration = configuration;
     }
 
     @Override
