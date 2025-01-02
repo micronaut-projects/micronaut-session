@@ -2,6 +2,7 @@ introduction:
   title: Introduction
 sessions:
   title: Http Sessions
+  sessionFilter: Session Filter
   enablingSessions: Enabling Sessions
   redisSessions: Redis Sessions
   configuringSessionResolution: Configuring Session Resolution

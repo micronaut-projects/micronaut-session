@@ -15,6 +15,7 @@
  */
 package io.micronaut.session.http;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.async.publisher.Publishers;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.core.util.StringUtils;
@@ -24,6 +25,7 @@ import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Filter;
 import io.micronaut.http.exceptions.HttpStatusException;
+import io.micronaut.http.filter.FilterPatternStyle;
 import io.micronaut.http.filter.HttpServerFilter;
 import io.micronaut.http.filter.ServerFilterChain;
 import io.micronaut.http.filter.ServerFilterPhase;
@@ -45,9 +47,10 @@ import java.util.Optional;
  * @author Graeme Rocher
  * @since 1.0
  */
-@Filter("/**")
+@Requires(property = HttpSessionFilterConfigurationProperties.PROPERTY_ENABLED, notEquals = StringUtils.FALSE, defaultValue = StringUtils.TRUE)
+@Filter(patternStyle = FilterPatternStyle.REGEX,
+        value = "${" + HttpSessionFilterConfigurationProperties.PROPERTY_REGEX_PATTERN + ":" + HttpSessionFilterConfigurationProperties.DEFAULT_REGEX_PATTERN + "}")
 public class HttpSessionFilter implements HttpServerFilter {
-
     /**
      * The order of the filter.
      */
@@ -90,11 +93,11 @@ public class HttpSessionFilter implements HttpServerFilter {
                     String id = ids.get(0);
                     Publisher<Optional<Session>> sessionLookup = Publishers.fromCompletableFuture(() -> sessionStore.findSession(id));
                     Flux<MutableHttpResponse<?>> storeSessionInAttributes = Flux
-                            .from(sessionLookup)
-                            .switchMap(session -> {
-                                session.ifPresent(entries -> request.getAttributes().put(SESSION_ATTRIBUTE, entries));
-                                return chain.proceed(request);
-                            });
+                        .from(sessionLookup)
+                        .switchMap(session -> {
+                            session.ifPresent(entries -> request.getAttributes().put(SESSION_ATTRIBUTE, entries));
+                            return chain.proceed(request);
+                        });
                     return encodeSessionId(request, storeSessionInAttributes);
                 }
             }
@@ -134,7 +137,7 @@ public class HttpSessionFilter implements HttpServerFilter {
                 if (opt.isPresent()) {
                     Session session = opt.get();
                     if (sessionAttr != null) {
-                       session.put(sessionAttr, body.get());
+                        session.put(sessionAttr, body.get());
                     }
 
                     if (session.isNew() || session.isModified()) {
@@ -145,8 +148,8 @@ public class HttpSessionFilter implements HttpServerFilter {
                     Session newSession = sessionStore.newSession();
                     newSession.put(sessionAttr, body.get());
                     return Flux
-                            .from(Publishers.fromCompletableFuture(() -> sessionStore.save(newSession)))
-                            .map(s -> new SessionAndResponse(Optional.of(s), response));
+                        .from(Publishers.fromCompletableFuture(() -> sessionStore.save(newSession)))
+                        .map(s -> new SessionAndResponse(Optional.of(s), response));
                 }
                 return Flux.just(new SessionAndResponse(opt, response));
             });
