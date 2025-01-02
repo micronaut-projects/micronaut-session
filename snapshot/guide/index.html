@@ -85,19 +85,21 @@
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-sessions"><a href="#sessions"><strong>2</strong><span>Http Sessions</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-enablingSessions"><a href="#enablingSessions"><strong>2.1</strong><span>Enabling Sessions</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionFilter"><a href="#sessionFilter"><strong>2.1</strong><span>Session Filter</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-redisSessions"><a href="#redisSessions"><strong>2.2</strong><span>Redis Sessions</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-enablingSessions"><a href="#enablingSessions"><strong>2.2</strong><span>Enabling Sessions</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-configuringSessionResolution"><a href="#configuringSessionResolution"><strong>2.3</strong><span>Configuring Session Resolution</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-redisSessions"><a href="#redisSessions"><strong>2.3</strong><span>Redis Sessions</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-workingWithSessions"><a href="#workingWithSessions"><strong>2.4</strong><span>Working with Sessions</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-configuringSessionResolution"><a href="#configuringSessionResolution"><strong>2.4</strong><span>Configuring Session Resolution</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionClients"><a href="#sessionClients"><strong>2.5</strong><span>Session Clients</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-workingWithSessions"><a href="#workingWithSessions"><strong>2.5</strong><span>Working with Sessions</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionValue"><a href="#sessionValue"><strong>2.6</strong><span>Using @SessionValue</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionClients"><a href="#sessionClients"><strong>2.6</strong><span>Session Clients</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionEvents"><a href="#sessionEvents"><strong>2.7</strong><span>Session Events</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionValue"><a href="#sessionValue"><strong>2.7</strong><span>Using @SessionValue</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionEvents"><a href="#sessionEvents"><strong>2.8</strong><span>Session Events</span></a></div>
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-releaseHistory"><a href="#releaseHistory"><strong>3</strong><span>Release History</span></a></div>
         
@@ -150,7 +152,51 @@
 </ul>
 </div>
 
-<h2 id="enablingSessions"><a class="anchor" href="#enablingSessions"></a>2.1 Enabling Sessions</h2>
+<h2 id="sessionFilter"><a class="anchor" href="#sessionFilter"></a>2.1 Session Filter</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/4.6.x/src/main/docs/guide/sessions/sessionFilter.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The core of Micronaut Session implementation is <code>io.micronaut.session.http.HttpSessionFilter</code>.</p>
+</div>
+<div class="paragraph">
+<p>The following configuration options are available for the SessionFilter Filter:</p>
+</div>
+<a id="io.micronaut.session.http.HttpSessionFilterConfigurationProperties" href="#io.micronaut.session.http.HttpSessionFilterConfigurationProperties">&#128279;</a>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/session/http/HttpSessionFilterConfigurationProperties.html">HttpSessionFilterConfigurationProperties</a></caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.session.filter.regex-pattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pattern the {@link HttpSessionFilter} should match. Default value "^.*$".</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.session.filter.enabled</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether the {@link HttpSessionFilter} is enabled. Default value true</p></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="enablingSessions"><a class="anchor" href="#enablingSessions"></a>2.2 Enabling Sessions</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/4.6.x/src/main/docs/guide/sessions/enablingSessions.adoc"'>
@@ -179,7 +225,7 @@
 </div></p>
 </div>
 
-<h2 id="redisSessions"><a class="anchor" href="#redisSessions"></a>2.2 Redis Sessions</h2>
+<h2 id="redisSessions"><a class="anchor" href="#redisSessions"></a>2.3 Redis Sessions</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/4.6.x/src/main/docs/guide/sessions/redisSessions.adoc"'>
@@ -290,7 +336,7 @@ micronaut {
 </div>
 </div>
 
-<h2 id="configuringSessionResolution"><a class="anchor" href="#configuringSessionResolution"></a>2.3 Configuring Session Resolution</h2>
+<h2 id="configuringSessionResolution"><a class="anchor" href="#configuringSessionResolution"></a>2.4 Configuring Session Resolution</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/4.6.x/src/main/docs/guide/sessions/configuringSessionResolution.adoc"'>
@@ -381,7 +427,7 @@ micronaut.session.http.header=true</code></pre>
 <p>The above configuration enables header resolution, but disables cookie resolution. You can also configure header and cookie names.</p>
 </div>
 
-<h2 id="workingWithSessions"><a class="anchor" href="#workingWithSessions"></a>2.4 Working with Sessions</h2>
+<h2 id="workingWithSessions"><a class="anchor" href="#workingWithSessions"></a>2.5 Working with Sessions</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/4.6.x/src/main/docs/guide/sessions/workingWithSessions.adoc"'>
@@ -537,7 +583,7 @@ internal fun clearCart(session: Session?) {
 <p>The above method only injects a new <a href="../api/io/micronaut/session/Session.html">Session</a> if one already exists.</p>
 </div>
 
-<h2 id="sessionClients"><a class="anchor" href="#sessionClients"></a>2.5 Session Clients</h2>
+<h2 id="sessionClients"><a class="anchor" href="#sessionClients"></a>2.6 Session Clients</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/4.6.x/src/main/docs/guide/sessions/sessionClients.adoc"'>
@@ -605,7 +651,7 @@ cart = response.body()</code></pre>
 </table>
 </div>
 
-<h2 id="sessionValue"><a class="anchor" href="#sessionValue"></a>2.6 Using @SessionValue</h2>
+<h2 id="sessionValue"><a class="anchor" href="#sessionValue"></a>2.7 Using @SessionValue</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/4.6.x/src/main/docs/guide/sessions/sessionValue.adoc"'>
@@ -663,7 +709,7 @@ internal fun viewCart(@SessionValue cart: Cart?): Cart { // <b class="conum">(2)
 </table>
 </div>
 
-<h2 id="sessionEvents"><a class="anchor" href="#sessionEvents"></a>2.7 Session Events</h2>
+<h2 id="sessionEvents"><a class="anchor" href="#sessionEvents"></a>2.8 Session Events</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/4.6.x/src/main/docs/guide/sessions/sessionEvents.adoc"'>
