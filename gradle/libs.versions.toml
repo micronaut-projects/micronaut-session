@@ -7,7 +7,7 @@ micronaut-serde = "2.14.0"
 micronaut-test = "4.7.0"
 groovy = "4.0.18"
 kotlin = '2.1.21'
-sonatype-scan = "3.0.0"
+sonatype-scan = "3.1.1"
 
 [libraries]
 # Core
