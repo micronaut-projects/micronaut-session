@@ -1,0 +1,6 @@
+io.micronaut.session
+io.micronaut.session.annotation
+io.micronaut.session.binder
+io.micronaut.session.event
+io.micronaut.session.http
+io.micronaut.session.websocket
