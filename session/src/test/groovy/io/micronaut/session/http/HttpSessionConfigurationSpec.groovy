@@ -4,6 +4,8 @@ import io.micronaut.context.annotation.Property
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
 import spock.lang.Specification
+
+import java.time.Duration
 import java.time.temporal.ChronoUnit
 import java.time.temporal.TemporalAmount
 
@@ -25,8 +27,11 @@ class HttpSessionConfigurationSpec extends Specification {
 
         when:
         TemporalAmount temporalAmount = temporalAmountOptional.get()
+        long days = temporalAmount instanceof Duration ?
+                ((Duration) temporalAmount).toDays() :
+                temporalAmount.get(ChronoUnit.DAYS)
 
         then:
-        expected == temporalAmount.get(ChronoUnit.DAYS)
+        expected == days
     }
 }
