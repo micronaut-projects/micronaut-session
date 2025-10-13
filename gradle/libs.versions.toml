@@ -6,7 +6,7 @@ micronaut-logging = "1.7.0"
 micronaut-serde = "2.15.5"
 micronaut-test = "4.7.0"
 groovy = "4.0.18"
-kotlin = '2.1.21'
+kotlin = '2.2.20'
 
 [libraries]
 # Core
