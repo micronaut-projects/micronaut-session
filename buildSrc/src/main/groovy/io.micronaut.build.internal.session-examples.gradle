@@ -1,6 +1,11 @@
 plugins {
     id 'io.micronaut.build.internal.session-base'
     id 'java'
+    id 'java-library'
+}
+
+repositories {
+    mavenCentral()
 }
 
 dependencies {
@@ -11,6 +16,7 @@ dependencies {
     testImplementation(mn.micronaut.http.server)
     testImplementation(mn.micronaut.http.server.netty)
     testImplementation(mnSerde.micronaut.serde.jackson)
+    testRuntimeOnly(mnTest.junit.platform.suite)
 
     testRuntimeOnly mnLogging.logback.classic
 }
