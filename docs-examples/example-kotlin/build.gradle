@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     id 'io.micronaut.build.internal.session-examples'
     alias libs.plugins.kotlin.jvm
@@ -21,7 +22,7 @@ test {
 }
 
 kotlin {
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_21
     }
 }
