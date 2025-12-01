@@ -15,7 +15,7 @@
  */
 package io.micronaut.session.http;
 
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.core.util.Toggleable;
 
 /**

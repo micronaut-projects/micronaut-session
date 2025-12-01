@@ -23,7 +23,7 @@ import com.github.benmanes.caffeine.cache.Scheduler;
 import io.micronaut.context.annotation.Primary;
 import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.session.event.AbstractSessionEvent;
 import io.micronaut.session.event.SessionCreatedEvent;
 import io.micronaut.session.event.SessionDeletedEvent;
