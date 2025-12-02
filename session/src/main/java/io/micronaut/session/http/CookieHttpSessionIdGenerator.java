@@ -16,7 +16,7 @@
 package io.micronaut.session.http;
 
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.http.cookie.Cookie;
 import io.micronaut.session.Session;
 import io.micronaut.session.SessionSettings;

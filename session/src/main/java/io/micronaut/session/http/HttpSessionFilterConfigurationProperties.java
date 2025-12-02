@@ -17,7 +17,7 @@ package io.micronaut.session.http;
 
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.NonNull;
+import org.jspecify.annotations.NonNull;
 import io.micronaut.session.SessionSettings;
 
 /**
