@@ -13,6 +13,7 @@ dependencies {
     testImplementation(mnSerde.micronaut.serde.jackson)
 
     testRuntimeOnly mnLogging.logback.classic
+    testRuntimeOnly(mnTest.junit.platform.launcher)
 }
 
 test {
