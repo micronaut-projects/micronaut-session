@@ -49,6 +49,7 @@ class ShoppingControllerTest: StringSpec() {
 
             // tag::add[]
             val sessionId = response.header(HttpHeaders.AUTHORIZATION_INFO) // <1>
+            assertNotNull(sessionId)
 
             response = Flux.from(client.exchange(HttpRequest.POST("/shopping/cart/Apple", "")
                              .header(HttpHeaders.AUTHORIZATION_INFO, sessionId), Cart::class.java)) // <2>
