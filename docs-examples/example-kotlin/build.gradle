@@ -1,8 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     id 'io.micronaut.build.internal.session-examples'
-    alias libs.plugins.kotlin.jvm
-    alias libs.plugins.kotlin.kapt
+    id("io.micronaut.build.internal.kotlin-kapt")
 }
 
 dependencies {
@@ -12,22 +11,11 @@ dependencies {
     testAnnotationProcessor(mn.micronaut.inject.java)
 
     testImplementation mnTest.micronaut.test.kotest5
-    testImplementation libs.kotlin.test
+    testImplementation(mn.kotlin.test)
 }
 
 test {
     systemProperties['junit.jupiter.execution.parallel.enabled'] = true
     maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
     forkEvery = 1
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-}
-
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_21
-    }
 }
