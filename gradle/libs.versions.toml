@@ -3,7 +3,6 @@ micronaut = "5.0.0-M20"
 micronaut-cache = "6.0.0-M2"
 micronaut-logging = "2.0.0-M2"
 micronaut-serde = "3.0.0-M6"
-kotlin = '2.3.20'
 
 [libraries]
 # Core
@@ -11,9 +10,7 @@ micronaut-core = { module = 'io.micronaut:micronaut-core-bom', version.ref = 'mi
 micronaut-cache = { module = "io.micronaut.cache:micronaut-cache-bom", version.ref = "micronaut-cache" }
 micronaut-serde = { module = "io.micronaut.serde:micronaut-serde-bom", version.ref = "micronaut-serde" }
 
-kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 [bundles]
 
 [plugins]
-kotlin-jvm = { id = 'org.jetbrains.kotlin.jvm', version.ref = 'kotlin' }
-kotlin-kapt = { id = 'org.jetbrains.kotlin.kapt', version.ref = 'kotlin' }
+
