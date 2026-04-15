@@ -23,13 +23,12 @@ import com.github.benmanes.caffeine.cache.Scheduler;
 import io.micronaut.context.annotation.Primary;
 import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.core.annotation.Internal;
-import org.jspecify.annotations.NonNull;
-import io.micronaut.session.event.AbstractSessionEvent;
 import io.micronaut.session.event.SessionCreatedEvent;
 import io.micronaut.session.event.SessionDeletedEvent;
 import io.micronaut.session.event.SessionDestroyedEvent;
 import io.micronaut.session.event.SessionExpiredEvent;
 import jakarta.inject.Singleton;
+import org.jspecify.annotations.NonNull;
 
 import java.time.Instant;
 import java.util.Optional;
@@ -46,7 +45,11 @@ import java.util.concurrent.CompletableFuture;
 public class InMemorySessionStore implements SessionStore<InMemorySession> {
 
     private final SessionConfiguration sessionConfiguration;
-    private final ApplicationEventPublisher<? super AbstractSessionEvent> eventPublisher;
+    private final ApplicationEventPublisher<SessionCreatedEvent> sessionCreatedEventPublisher;
+    private final ApplicationEventPublisher<SessionDeletedEvent> sessionDeletedEventPublisher;
+    private final ApplicationEventPublisher<SessionExpiredEvent> sessionExpiredEventPublisher;
+    private final ApplicationEventPublisher<SessionDestroyedEvent> sessionDestroyedEventPublisher;
+
     private final Cache<String, InMemorySession> sessions;
     private final SessionIdGenerator sessionIdGenerator;
 
@@ -55,15 +58,24 @@ public class InMemorySessionStore implements SessionStore<InMemorySession> {
      *
      * @param sessionIdGenerator The session id generator
      * @param sessionConfiguration The sessions configuration
-     * @param eventPublisher The application event publisher
+     * @param sessionCreatedEventPublisher The session created event publisher
+     * @param sessionDeletedEventPublisher The session deleted event publisher
+     * @param sessionExpiredEventPublisher The session expired event publisher
+     * @param sessionDestroyedEventPublisher The session destroyed event publisher
      */
     public InMemorySessionStore(
         SessionIdGenerator sessionIdGenerator,
         SessionConfiguration sessionConfiguration,
-        ApplicationEventPublisher<? super AbstractSessionEvent> eventPublisher) {
+        ApplicationEventPublisher<SessionCreatedEvent> sessionCreatedEventPublisher,
+        ApplicationEventPublisher<SessionDeletedEvent> sessionDeletedEventPublisher,
+        ApplicationEventPublisher<SessionExpiredEvent> sessionExpiredEventPublisher,
+        ApplicationEventPublisher<SessionDestroyedEvent> sessionDestroyedEventPublisher) {
 
         this.sessionIdGenerator = sessionIdGenerator;
-        this.eventPublisher = eventPublisher;
+        this.sessionCreatedEventPublisher = sessionCreatedEventPublisher;
+        this.sessionDeletedEventPublisher = sessionDeletedEventPublisher;
+        this.sessionExpiredEventPublisher = sessionExpiredEventPublisher;
+        this.sessionDestroyedEventPublisher = sessionDestroyedEventPublisher;
         this.sessionConfiguration = sessionConfiguration;
         this.sessions = newSessionCache(sessionConfiguration);
     }
@@ -100,7 +112,7 @@ public class InMemorySessionStore implements SessionStore<InMemorySession> {
         if (session != existing) {
             sessions.put(id, session);
             if (existing == null) {
-                eventPublisher.publishEvent(new SessionCreatedEvent(session));
+                sessionCreatedEventPublisher.publishEvent(new SessionCreatedEvent(session));
             }
         }
         return CompletableFuture.completedFuture(session);
@@ -163,9 +175,9 @@ public class InMemorySessionStore implements SessionStore<InMemorySession> {
     private RemovalListener<String, Session> newRemovalListener() {
         return (key, value, cause) -> {
             switch (cause) {
-                case REPLACED -> eventPublisher.publishEvent(new SessionDestroyedEvent(value));
-                case SIZE, EXPIRED -> eventPublisher.publishEvent(new SessionExpiredEvent(value));
-                case EXPLICIT -> eventPublisher.publishEvent(new SessionDeletedEvent(value));
+                case REPLACED -> sessionDestroyedEventPublisher.publishEvent(new SessionDestroyedEvent(value));
+                case SIZE, EXPIRED -> sessionExpiredEventPublisher.publishEvent(new SessionExpiredEvent(value));
+                case EXPLICIT -> sessionDeletedEventPublisher.publishEvent(new SessionDeletedEvent(value));
                 default ->
                     throw new IllegalStateException("Session should never be garbage collectable");
             }
