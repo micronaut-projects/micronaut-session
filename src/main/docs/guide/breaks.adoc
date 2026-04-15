@@ -1,0 +1,1 @@
+For Micronaut Session 5.x, `HttpSessionFilter` is a https://docs.micronaut.io/latest/guide/#filtermethods[method-based `@ServerFilter`] and no longer implements https://docs.micronaut.io/latest/guide/#httpServerFilter[`HttpServerFilter`].
