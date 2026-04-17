@@ -57,7 +57,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-summary" tabindex="0">Method Summary</a></li>
 <li><a href="#constructor-detail" tabindex="0">Constructor Details</a>
 <ol class="toc-list">
-<li><a href="#%3Cinit%3E(io.micronaut.session.SessionIdGenerator,io.micronaut.session.SessionConfiguration,io.micronaut.context.event.ApplicationEventPublisher)" tabindex="0">InMemorySessionStore(SessionIdGenerator, SessionConfiguration, ApplicationEventPublisher)</a></li>
+<li><a href="#%3Cinit%3E(io.micronaut.session.SessionIdGenerator,io.micronaut.session.SessionConfiguration,io.micronaut.context.event.ApplicationEventPublisher,io.micronaut.context.event.ApplicationEventPublisher,io.micronaut.context.event.ApplicationEventPublisher,io.micronaut.context.event.ApplicationEventPublisher)" tabindex="0">InMemorySessionStore(SessionIdGenerator, SessionConfiguration, ApplicationEventPublisher, ApplicationEventPublisher, ApplicationEventPublisher, ApplicationEventPublisher)</a></li>
 </ol>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
@@ -110,9 +110,12 @@ implements <a href="SessionStore.html" title="interface in io.micronaut.session"
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(io.micronaut.session.SessionIdGenerator,io.micronaut.session.SessionConfiguration,io.micronaut.context.event.ApplicationEventPublisher)" class="member-name-link">InMemorySessionStore</a><wbr>(<a href="SessionIdGenerator.html" title="interface in io.micronaut.session">SessionIdGenerator</a>&nbsp;sessionIdGenerator,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(io.micronaut.session.SessionIdGenerator,io.micronaut.session.SessionConfiguration,io.micronaut.context.event.ApplicationEventPublisher,io.micronaut.context.event.ApplicationEventPublisher,io.micronaut.context.event.ApplicationEventPublisher,io.micronaut.context.event.ApplicationEventPublisher)" class="member-name-link">InMemorySessionStore</a><wbr>(<a href="SessionIdGenerator.html" title="interface in io.micronaut.session">SessionIdGenerator</a>&nbsp;sessionIdGenerator,
  <a href="SessionConfiguration.html" title="class in io.micronaut.session">SessionConfiguration</a>&nbsp;sessionConfiguration,
- io.micronaut.context.event.ApplicationEventPublisher&lt;? super <a href="event/AbstractSessionEvent.html" title="class in io.micronaut.session.event">AbstractSessionEvent</a>&gt;&nbsp;eventPublisher)</code></div>
+ io.micronaut.context.event.ApplicationEventPublisher&lt;<a href="event/SessionCreatedEvent.html" title="class in io.micronaut.session.event">SessionCreatedEvent</a>&gt;&nbsp;sessionCreatedEventPublisher,
+ io.micronaut.context.event.ApplicationEventPublisher&lt;<a href="event/SessionDeletedEvent.html" title="class in io.micronaut.session.event">SessionDeletedEvent</a>&gt;&nbsp;sessionDeletedEventPublisher,
+ io.micronaut.context.event.ApplicationEventPublisher&lt;<a href="event/SessionExpiredEvent.html" title="class in io.micronaut.session.event">SessionExpiredEvent</a>&gt;&nbsp;sessionExpiredEventPublisher,
+ io.micronaut.context.event.ApplicationEventPublisher&lt;<a href="event/SessionDestroyedEvent.html" title="class in io.micronaut.session.event">SessionDestroyedEvent</a>&gt;&nbsp;sessionDestroyedEventPublisher)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Constructor.</div>
 </div>
@@ -173,18 +176,24 @@ implements <a href="SessionStore.html" title="interface in io.micronaut.session"
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(io.micronaut.session.SessionIdGenerator,io.micronaut.session.SessionConfiguration,io.micronaut.context.event.ApplicationEventPublisher)">
+<section class="detail" id="&lt;init&gt;(io.micronaut.session.SessionIdGenerator,io.micronaut.session.SessionConfiguration,io.micronaut.context.event.ApplicationEventPublisher,io.micronaut.context.event.ApplicationEventPublisher,io.micronaut.context.event.ApplicationEventPublisher,io.micronaut.context.event.ApplicationEventPublisher)">
 <h3>InMemorySessionStore</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">InMemorySessionStore</span><wbr><span class="parameters">(<a href="SessionIdGenerator.html" title="interface in io.micronaut.session">SessionIdGenerator</a>&nbsp;sessionIdGenerator,
  <a href="SessionConfiguration.html" title="class in io.micronaut.session">SessionConfiguration</a>&nbsp;sessionConfiguration,
- io.micronaut.context.event.ApplicationEventPublisher&lt;? super <a href="event/AbstractSessionEvent.html" title="class in io.micronaut.session.event">AbstractSessionEvent</a>&gt;&nbsp;eventPublisher)</span></div>
+ io.micronaut.context.event.ApplicationEventPublisher&lt;<a href="event/SessionCreatedEvent.html" title="class in io.micronaut.session.event">SessionCreatedEvent</a>&gt;&nbsp;sessionCreatedEventPublisher,
+ io.micronaut.context.event.ApplicationEventPublisher&lt;<a href="event/SessionDeletedEvent.html" title="class in io.micronaut.session.event">SessionDeletedEvent</a>&gt;&nbsp;sessionDeletedEventPublisher,
+ io.micronaut.context.event.ApplicationEventPublisher&lt;<a href="event/SessionExpiredEvent.html" title="class in io.micronaut.session.event">SessionExpiredEvent</a>&gt;&nbsp;sessionExpiredEventPublisher,
+ io.micronaut.context.event.ApplicationEventPublisher&lt;<a href="event/SessionDestroyedEvent.html" title="class in io.micronaut.session.event">SessionDestroyedEvent</a>&gt;&nbsp;sessionDestroyedEventPublisher)</span></div>
 <div class="block">Constructor.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>sessionIdGenerator</code> - The session id generator</dd>
 <dd><code>sessionConfiguration</code> - The sessions configuration</dd>
-<dd><code>eventPublisher</code> - The application event publisher</dd>
+<dd><code>sessionCreatedEventPublisher</code> - The session created event publisher</dd>
+<dd><code>sessionDeletedEventPublisher</code> - The session deleted event publisher</dd>
+<dd><code>sessionExpiredEventPublisher</code> - The session expired event publisher</dd>
+<dd><code>sessionDestroyedEventPublisher</code> - The session destroyed event publisher</dd>
 </dl>
 </div>
 </section>
