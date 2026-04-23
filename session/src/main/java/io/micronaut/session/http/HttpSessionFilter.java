@@ -26,7 +26,6 @@ import io.micronaut.http.annotation.RequestFilter;
 import io.micronaut.http.annotation.ResponseFilter;
 import io.micronaut.http.annotation.ServerFilter;
 import io.micronaut.http.exceptions.HttpStatusException;
-import io.micronaut.http.filter.FilterPatternStyle;
 import io.micronaut.http.filter.ServerFilterPhase;
 import io.micronaut.http.server.exceptions.InternalServerException;
 import io.micronaut.inject.MethodExecutionHandle;
@@ -41,6 +40,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+import java.util.regex.Pattern;
 
 /**
  * A server filter that resolves the current user {@link Session} if present and encodes the Session ID in
@@ -50,8 +50,7 @@ import java.util.concurrent.CompletionStage;
  * @since 1.0
  */
 @Requires(property = HttpSessionFilterConfigurationProperties.PROPERTY_ENABLED, notEquals = StringUtils.FALSE, defaultValue = StringUtils.TRUE)
-@ServerFilter(patternStyle = FilterPatternStyle.REGEX,
-    value = "${" + HttpSessionFilterConfigurationProperties.PROPERTY_REGEX_PATTERN + ":" + HttpSessionFilterConfigurationProperties.DEFAULT_REGEX_PATTERN + "}")
+@ServerFilter("/**")
 public class HttpSessionFilter implements Ordered {
     /**
      * The order of the filter.
@@ -66,6 +65,7 @@ public class HttpSessionFilter implements Ordered {
     private final SessionStore<Session> sessionStore;
     private final HttpSessionIdResolver[] resolvers;
     private final HttpSessionIdEncoder[] encoders;
+    private final @Nullable Pattern regexPattern;
 
     /**
      * Constructor.
@@ -73,11 +73,18 @@ public class HttpSessionFilter implements Ordered {
      * @param sessionStore The session store
      * @param resolvers The HTTP session id resolvers
      * @param encoders The HTTP session id encoders
+     * @param configuration The filter configuration
      */
-    public HttpSessionFilter(SessionStore<Session> sessionStore, HttpSessionIdResolver[] resolvers, HttpSessionIdEncoder[] encoders) {
+    public HttpSessionFilter(SessionStore<Session> sessionStore,
+                             HttpSessionIdResolver[] resolvers,
+                             HttpSessionIdEncoder[] encoders,
+                             HttpSessionFilterConfiguration configuration) {
         this.sessionStore = sessionStore;
         this.resolvers = resolvers;
         this.encoders = encoders;
+        this.regexPattern = HttpSessionFilterConfigurationProperties.DEFAULT_REGEX_PATTERN.equals(configuration.getRegexPattern())
+            ? null
+            : Pattern.compile(configuration.getRegexPattern());
     }
 
     @Override
@@ -93,6 +100,9 @@ public class HttpSessionFilter implements Ordered {
      */
     @RequestFilter
     public CompletionStage<HttpRequest<?>> filterRequest(HttpRequest<?> request) {
+        if (!matchesFilter(request)) {
+            return CompletableFuture.completedFuture(request);
+        }
         return loadSessionIntoRequest(request);
     }
 
@@ -108,10 +118,21 @@ public class HttpSessionFilter implements Ordered {
     public CompletionStage<MutableHttpResponse<?>> filterResponse(HttpRequest<?> request,
                                                                   MutableHttpResponse<?> response,
                                                                   @Nullable RouteInfo<?> routeInfo) {
+        if (!isFilterApplied(request)) {
+            return CompletableFuture.completedFuture(response);
+        }
         MethodExecutionHandle<?, ?> routeMatch = routeInfo instanceof MethodBasedRouteInfo<?, ?> methodBasedRouteInfo
             ? methodBasedRouteInfo.getTargetMethod()
             : null;
         return encodeSessionInResponse(request, response, routeMatch);
+    }
+
+    private boolean matchesFilter(HttpRequest<?> request) {
+        return regexPattern == null || regexPattern.matcher(request.getPath()).matches();
+    }
+
+    private boolean isFilterApplied(HttpRequest<?> request) {
+        return request.getAttribute(HttpSessionFilter.class.getName(), Boolean.class).orElse(false);
     }
 
     private CompletionStage<HttpRequest<?>> loadSessionIntoRequest(HttpRequest<?> request) {
