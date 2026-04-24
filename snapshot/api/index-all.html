@@ -151,8 +151,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Delete a session for the given ID.</div>
 </dd>
-<dt><a href="io/micronaut/session/http/HttpSessionFilter.html#doFilter(io.micronaut.http.HttpRequest,io.micronaut.http.filter.ServerFilterChain)" class="member-name-link">doFilter(HttpRequest, ServerFilterChain)</a> - Method in class io.micronaut.session.http.<a href="io/micronaut/session/http/HttpSessionFilter.html" title="class in io.micronaut.session.http">HttpSessionFilter</a></dt>
-<dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:E">E</h2>
 <dl class="index">
@@ -169,6 +167,14 @@ loadScripts(document, 'script');</script>
 </dl>
 <h2 class="title" id="I:F">F</h2>
 <dl class="index">
+<dt><a href="io/micronaut/session/http/HttpSessionFilter.html#filterRequest(io.micronaut.http.HttpRequest)" class="member-name-link">filterRequest(HttpRequest)</a> - Method in class io.micronaut.session.http.<a href="io/micronaut/session/http/HttpSessionFilter.html" title="class in io.micronaut.session.http">HttpSessionFilter</a></dt>
+<dd>
+<div class="block">Resolve an existing HTTP session before the matched route is invoked.</div>
+</dd>
+<dt><a href="io/micronaut/session/http/HttpSessionFilter.html#filterResponse(io.micronaut.http.HttpRequest,io.micronaut.http.MutableHttpResponse,io.micronaut.web.router.RouteInfo)" class="member-name-link">filterResponse(HttpRequest, MutableHttpResponse, RouteInfo)</a> - Method in class io.micronaut.session.http.<a href="io/micronaut/session/http/HttpSessionFilter.html" title="class in io.micronaut.session.http">HttpSessionFilter</a></dt>
+<dd>
+<div class="block">Persist and encode the HTTP session after the matched route has produced a response.</div>
+</dd>
 <dt><a href="io/micronaut/session/http/SessionForRequest.html#find(io.micronaut.http.HttpRequest)" class="member-name-link">find(HttpRequest)</a> - Static method in class io.micronaut.session.http.<a href="io/micronaut/session/http/SessionForRequest.html" title="class in io.micronaut.session.http">SessionForRequest</a></dt>
 <dd>
 <div class="block">Finds a session.</div>
@@ -289,7 +295,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/session/http/HttpSessionFilter.html" class="type-name-link" title="class in io.micronaut.session.http">HttpSessionFilter</a> - Class in <a href="io/micronaut/session/http/package-summary.html">io.micronaut.session.http</a></dt>
 <dd>
-<div class="block">A <code>HttpServerFilter</code> that resolves the current user <a href="io/micronaut/session/Session.html" title="interface in io.micronaut.session"><code>Session</code></a> if present and encodes the Session ID in
+<div class="block">A server filter that resolves the current user <a href="io/micronaut/session/Session.html" title="interface in io.micronaut.session"><code>Session</code></a> if present and encodes the Session ID in
 the response.</div>
 </dd>
 <dt><a href="io/micronaut/session/http/HttpSessionFilter.html#%3Cinit%3E(io.micronaut.session.SessionStore,io.micronaut.session.http.HttpSessionIdResolver%5B%5D,io.micronaut.session.http.HttpSessionIdEncoder%5B%5D)" class="member-name-link">HttpSessionFilter(SessionStore, HttpSessionIdResolver[], HttpSessionIdEncoder[])</a> - Constructor for class io.micronaut.session.http.<a href="io/micronaut/session/http/HttpSessionFilter.html" title="class in io.micronaut.session.http">HttpSessionFilter</a></dt>

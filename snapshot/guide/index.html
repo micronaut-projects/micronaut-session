@@ -48,11 +48,13 @@
                                 
                                 <div class="toc-item" style="margin-left:0"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#sessions"><strong>2</strong><span>Http Sessions</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#breaks"><strong>2</strong><span>Breaking Changes</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#releaseHistory"><strong>3</strong><span>Release History</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#sessions"><strong>3</strong><span>Http Sessions</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#repository"><strong>4</strong><span>Repository</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#releaseHistory"><strong>4</strong><span>Release History</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#repository"><strong>5</strong><span>Repository</span></a></div>
                                 
                             </div>
                         </div>
@@ -85,27 +87,29 @@
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-introduction"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-sessions"><a href="#sessions"><strong>2</strong><span>Http Sessions</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-breaks"><a href="#breaks"><strong>2</strong><span>Breaking Changes</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionFilter"><a href="#sessionFilter"><strong>2.1</strong><span>Session Filter</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-sessions"><a href="#sessions"><strong>3</strong><span>Http Sessions</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-enablingSessions"><a href="#enablingSessions"><strong>2.2</strong><span>Enabling Sessions</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionFilter"><a href="#sessionFilter"><strong>3.1</strong><span>Session Filter</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-redisSessions"><a href="#redisSessions"><strong>2.3</strong><span>Redis Sessions</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-enablingSessions"><a href="#enablingSessions"><strong>3.2</strong><span>Enabling Sessions</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-configuringSessionResolution"><a href="#configuringSessionResolution"><strong>2.4</strong><span>Configuring Session Resolution</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-redisSessions"><a href="#redisSessions"><strong>3.3</strong><span>Redis Sessions</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-workingWithSessions"><a href="#workingWithSessions"><strong>2.5</strong><span>Working with Sessions</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-configuringSessionResolution"><a href="#configuringSessionResolution"><strong>3.4</strong><span>Configuring Session Resolution</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionClients"><a href="#sessionClients"><strong>2.6</strong><span>Session Clients</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-workingWithSessions"><a href="#workingWithSessions"><strong>3.5</strong><span>Working with Sessions</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionValue"><a href="#sessionValue"><strong>2.7</strong><span>Using @SessionValue</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionClients"><a href="#sessionClients"><strong>3.6</strong><span>Session Clients</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionEvents"><a href="#sessionEvents"><strong>2.8</strong><span>Session Events</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionValue"><a href="#sessionValue"><strong>3.7</strong><span>Using @SessionValue</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-releaseHistory"><a href="#releaseHistory"><strong>3</strong><span>Release History</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionEvents"><a href="#sessionEvents"><strong>3.8</strong><span>Session Events</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-repository"><a href="#repository"><strong>4</strong><span>Repository</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-releaseHistory"><a href="#releaseHistory"><strong>4</strong><span>Release History</span></a></div>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-repository"><a href="#repository"><strong>5</strong><span>Repository</span></a></div>
         
         </div>
     </div>
@@ -131,7 +135,20 @@
 <p>By default, Micronaut is a stateless HTTP server, however depending on your application requirements you may need the notion of HTTP sessions.</p>
 </div>
 
-<h1 id="sessions"><a class="anchor" href="#sessions"></a>2 Http Sessions</h1>
+<h1 id="breaks"><a class="anchor" href="#breaks"></a>2 Breaking Changes</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/breaks.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>For Micronaut Session 5.x, <code>HttpSessionFilter</code> is a <a href="https://docs.micronaut.io/latest/guide/#filtermethods">method-based <code>@ServerFilter</code></a> and no longer implements <a href="https://docs.micronaut.io/latest/guide/#httpServerFilter"><code>HttpServerFilter</code></a>.</p>
+</div>
+
+<h1 id="sessions"><a class="anchor" href="#sessions"></a>3 Http Sessions</h1>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/sessions.adoc"'>
@@ -154,7 +171,7 @@
 </ul>
 </div>
 
-<h2 id="sessionFilter"><a class="anchor" href="#sessionFilter"></a>2.1 Session Filter</h2>
+<h2 id="sessionFilter"><a class="anchor" href="#sessionFilter"></a>3.1 Session Filter</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/sessions/sessionFilter.adoc"'>
@@ -202,7 +219,7 @@
 </tbody>
 </table>
 
-<h2 id="enablingSessions"><a class="anchor" href="#enablingSessions"></a>2.2 Enabling Sessions</h2>
+<h2 id="enablingSessions"><a class="anchor" href="#enablingSessions"></a>3.2 Enabling Sessions</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/sessions/enablingSessions.adoc"'>
@@ -232,7 +249,7 @@
 </p>
 </div>
 
-<h2 id="redisSessions"><a class="anchor" href="#redisSessions"></a>2.3 Redis Sessions</h2>
+<h2 id="redisSessions"><a class="anchor" href="#redisSessions"></a>3.3 Redis Sessions</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/sessions/redisSessions.adoc"'>
@@ -343,7 +360,7 @@ micronaut {
 </div>
 </div>
 
-<h2 id="configuringSessionResolution"><a class="anchor" href="#configuringSessionResolution"></a>2.4 Configuring Session Resolution</h2>
+<h2 id="configuringSessionResolution"><a class="anchor" href="#configuringSessionResolution"></a>3.4 Configuring Session Resolution</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/sessions/configuringSessionResolution.adoc"'>
@@ -434,7 +451,7 @@ micronaut.session.http.header=true</code></pre>
 <p>The above configuration enables header resolution, but disables cookie resolution. You can also configure header and cookie names.</p>
 </div>
 
-<h2 id="workingWithSessions"><a class="anchor" href="#workingWithSessions"></a>2.5 Working with Sessions</h2>
+<h2 id="workingWithSessions"><a class="anchor" href="#workingWithSessions"></a>3.5 Working with Sessions</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/sessions/workingWithSessions.adoc"'>
@@ -590,7 +607,7 @@ void clearCart(@Nullable Session session) {
 <p>The above method only injects a new <a href="../api/io/micronaut/session/Session.html">Session</a> if one already exists.</p>
 </div>
 
-<h2 id="sessionClients"><a class="anchor" href="#sessionClients"></a>2.6 Session Clients</h2>
+<h2 id="sessionClients"><a class="anchor" href="#sessionClients"></a>3.6 Session Clients</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/sessions/sessionClients.adoc"'>
@@ -658,7 +675,7 @@ cart = response.body()</code></pre>
 </table>
 </div>
 
-<h2 id="sessionValue"><a class="anchor" href="#sessionValue"></a>2.7 Using @SessionValue</h2>
+<h2 id="sessionValue"><a class="anchor" href="#sessionValue"></a>3.7 Using @SessionValue</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/sessions/sessionValue.adoc"'>
@@ -716,7 +733,7 @@ Cart viewCart(@SessionValue @Nullable Cart cart) { // <b class="conum">(2)</b>
 </table>
 </div>
 
-<h2 id="sessionEvents"><a class="anchor" href="#sessionEvents"></a>2.8 Session Events</h2>
+<h2 id="sessionEvents"><a class="anchor" href="#sessionEvents"></a>3.8 Session Events</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/sessions/sessionEvents.adoc"'>
@@ -763,7 +780,7 @@ Cart viewCart(@SessionValue @Nullable Cart cart) { // <b class="conum">(2)</b>
 </tbody>
 </table>
 
-<h1 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>3 Release History</h1>
+<h1 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>4 Release History</h1>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/releaseHistory.adoc"'>
@@ -779,7 +796,7 @@ Cart viewCart(@SessionValue @Nullable Cart cart) { // <b class="conum">(2)</b>
 <p><a href="https://github.com/micronaut-projects/micronaut-session/releases">https://github.com/micronaut-projects/micronaut-session/releases</a></p>
 </div>
 
-<h1 id="repository"><a class="anchor" href="#repository"></a>4 Repository</h1>
+<h1 id="repository"><a class="anchor" href="#repository"></a>5 Repository</h1>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/repository.adoc"'>

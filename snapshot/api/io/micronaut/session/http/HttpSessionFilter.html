@@ -70,7 +70,8 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
 <li><a href="#getOrder()" tabindex="0">getOrder()</a></li>
-<li><a href="#doFilter(io.micronaut.http.HttpRequest,io.micronaut.http.filter.ServerFilterChain)" tabindex="0">doFilter(HttpRequest, ServerFilterChain)</a></li>
+<li><a href="#filterRequest(io.micronaut.http.HttpRequest)" tabindex="0">filterRequest(HttpRequest)</a></li>
+<li><a href="#filterResponse(io.micronaut.http.HttpRequest,io.micronaut.http.MutableHttpResponse,io.micronaut.web.router.RouteInfo)" tabindex="0">filterResponse(HttpRequest, MutableHttpResponse, RouteInfo)</a></li>
 </ol>
 </li>
 </ol>
@@ -86,19 +87,19 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code>io.micronaut.core.order.Ordered, io.micronaut.http.filter.HttpFilter, io.micronaut.http.filter.HttpServerFilter</code></dd>
+<dd><code>io.micronaut.core.order.Ordered</code></dd>
 </dl>
 <hr>
 <div class="horizontal-scroll">
 <div class="type-signature"><span class="annotations">@Requires(property="micronaut.session.filter.enabled",
           notEquals="false",
           defaultValue="true")
-@Filter(patternStyle=REGEX,
-        value="${micronaut.session.filter.regex-pattern:^.*$}")
+@ServerFilter(patternStyle=REGEX,
+              value="${micronaut.session.filter.regex-pattern:^.*$}")
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">HttpSessionFilter</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements io.micronaut.http.filter.HttpServerFilter</span></div>
-<div class="block">A <code>HttpServerFilter</code> that resolves the current user <a href="../Session.html" title="interface in io.micronaut.session"><code>Session</code></a> if present and encodes the Session ID in
+implements io.micronaut.core.order.Ordered</span></div>
+<div class="block">A server filter that resolves the current user <a href="../Session.html" title="interface in io.micronaut.session"><code>Session</code></a> if present and encodes the Session ID in
 the response.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -163,22 +164,27 @@ the response.</div>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.reactivestreams.Publisher<wbr>&lt;io.micronaut.http.MutableHttpResponse&lt;?&gt;&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doFilter(io.micronaut.http.HttpRequest,io.micronaut.http.filter.ServerFilterChain)" class="member-name-link">doFilter</a><wbr>(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
- io.micronaut.http.filter.ServerFilterChain&nbsp;chain)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/CompletionStage.html" title="class or interface in java.util.concurrent" class="external-link">CompletionStage</a><wbr>&lt;io.micronaut.http.HttpRequest&lt;?&gt;&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#filterRequest(io.micronaut.http.HttpRequest)" class="member-name-link">filterRequest</a><wbr>(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Resolve an existing HTTP session before the matched route is invoked.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/CompletionStage.html" title="class or interface in java.util.concurrent" class="external-link">CompletionStage</a><wbr>&lt;io.micronaut.http.MutableHttpResponse&lt;?&gt;&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#filterResponse(io.micronaut.http.HttpRequest,io.micronaut.http.MutableHttpResponse,io.micronaut.web.router.RouteInfo)" class="member-name-link">filterResponse</a><wbr>(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
+ io.micronaut.http.MutableHttpResponse&lt;?&gt;&nbsp;response,
+ @Nullable io.micronaut.web.router.RouteInfo&lt;?&gt;&nbsp;routeInfo)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Persist and encode the HTTP session after the matched route has produced a response.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOrder()" class="member-name-link">getOrder</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOrder()" class="member-name-link">getOrder</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#method-summary" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
-<div class="inherited-list">
-<h3 id="methods-inherited-from-class-io.micronaut.http.filter.HttpServerFilter">Methods inherited from interface&nbsp;io.micronaut.http.filter.HttpServerFilter</h3>
-<code>doFilter</code></div>
 </section>
 </li>
 </ul>
@@ -254,14 +260,37 @@ the response.</div>
 </section>
 </li>
 <li>
-<section class="detail" id="doFilter(io.micronaut.http.HttpRequest,io.micronaut.http.filter.ServerFilterChain)">
-<h3>doFilter</h3>
+<section class="detail" id="filterRequest(io.micronaut.http.HttpRequest)">
+<h3>filterRequest</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.reactivestreams.Publisher&lt;io.micronaut.http.MutableHttpResponse&lt;?&gt;&gt;</span>&nbsp;<span class="element-name">doFilter</span><wbr><span class="parameters">(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
- io.micronaut.http.filter.ServerFilterChain&nbsp;chain)</span></div>
+<div class="member-signature"><span class="annotations">@RequestFilter
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/CompletionStage.html" title="class or interface in java.util.concurrent" class="external-link">CompletionStage</a>&lt;io.micronaut.http.HttpRequest&lt;?&gt;&gt;</span>&nbsp;<span class="element-name">filterRequest</span><wbr><span class="parameters">(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request)</span></div>
+<div class="block">Resolve an existing HTTP session before the matched route is invoked.</div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code>doFilter</code>&nbsp;in interface&nbsp;<code>io.micronaut.http.filter.HttpServerFilter</code></dd>
+<dt>Parameters:</dt>
+<dd><code>request</code> - The request</dd>
+<dt>Returns:</dt>
+<dd>The request to continue with</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="filterResponse(io.micronaut.http.HttpRequest,io.micronaut.http.MutableHttpResponse,io.micronaut.web.router.RouteInfo)">
+<h3>filterResponse</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations">@ResponseFilter
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/CompletionStage.html" title="class or interface in java.util.concurrent" class="external-link">CompletionStage</a>&lt;io.micronaut.http.MutableHttpResponse&lt;?&gt;&gt;</span>&nbsp;<span class="element-name">filterResponse</span><wbr><span class="parameters">(io.micronaut.http.HttpRequest&lt;?&gt;&nbsp;request,
+ io.micronaut.http.MutableHttpResponse&lt;?&gt;&nbsp;response,
+ @Nullable io.micronaut.web.router.RouteInfo&lt;?&gt;&nbsp;routeInfo)</span></div>
+<div class="block">Persist and encode the HTTP session after the matched route has produced a response.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>request</code> - The request</dd>
+<dd><code>response</code> - The response</dd>
+<dd><code>routeInfo</code> - The matched route information, if any</dd>
+<dt>Returns:</dt>
+<dd>The response to continue with</dd>
 </dl>
 </div>
 </section>
