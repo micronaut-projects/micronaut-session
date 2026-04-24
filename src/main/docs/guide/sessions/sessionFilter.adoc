@@ -3,4 +3,3 @@ The core of Micronaut Session implementation is `io.micronaut.session.http.HttpS
 The following configuration options are available for the SessionFilter Filter:
 
 include::{includedir}configurationProperties/io.micronaut.session.http.HttpSessionFilterConfigurationProperties.adoc[]
-

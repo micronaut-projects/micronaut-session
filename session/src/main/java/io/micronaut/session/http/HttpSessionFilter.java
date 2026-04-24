@@ -16,41 +16,43 @@
 package io.micronaut.session.http;
 
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.async.publisher.Publishers;
+import io.micronaut.core.order.Ordered;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.http.HttpAttributes;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MutableHttpResponse;
-import io.micronaut.http.annotation.Filter;
+import io.micronaut.http.annotation.RequestFilter;
+import io.micronaut.http.annotation.ResponseFilter;
+import io.micronaut.http.annotation.ServerFilter;
 import io.micronaut.http.exceptions.HttpStatusException;
 import io.micronaut.http.filter.FilterPatternStyle;
-import io.micronaut.http.filter.HttpServerFilter;
-import io.micronaut.http.filter.ServerFilterChain;
 import io.micronaut.http.filter.ServerFilterPhase;
 import io.micronaut.http.server.exceptions.InternalServerException;
 import io.micronaut.inject.MethodExecutionHandle;
 import io.micronaut.session.Session;
 import io.micronaut.session.SessionStore;
 import io.micronaut.session.annotation.SessionValue;
-import org.reactivestreams.Publisher;
-import reactor.core.publisher.Flux;
+import io.micronaut.web.router.MethodBasedRouteInfo;
+import io.micronaut.web.router.RouteInfo;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 /**
- * A {@link io.micronaut.http.filter.HttpServerFilter} that resolves the current user {@link Session} if present and encodes the Session ID in
+ * A server filter that resolves the current user {@link Session} if present and encodes the Session ID in
  * the response.
  *
  * @author Graeme Rocher
  * @since 1.0
  */
 @Requires(property = HttpSessionFilterConfigurationProperties.PROPERTY_ENABLED, notEquals = StringUtils.FALSE, defaultValue = StringUtils.TRUE)
-@Filter(patternStyle = FilterPatternStyle.REGEX,
-        value = "${" + HttpSessionFilterConfigurationProperties.PROPERTY_REGEX_PATTERN + ":" + HttpSessionFilterConfigurationProperties.DEFAULT_REGEX_PATTERN + "}")
-public class HttpSessionFilter implements HttpServerFilter {
+@ServerFilter(patternStyle = FilterPatternStyle.REGEX,
+    value = "${" + HttpSessionFilterConfigurationProperties.PROPERTY_REGEX_PATTERN + ":" + HttpSessionFilterConfigurationProperties.DEFAULT_REGEX_PATTERN + "}")
+public class HttpSessionFilter implements Ordered {
     /**
      * The order of the filter.
      */
@@ -83,106 +85,125 @@ public class HttpSessionFilter implements HttpServerFilter {
         return ORDER;
     }
 
-    @Override
-    public Publisher<MutableHttpResponse<?>> doFilter(HttpRequest<?> request, ServerFilterChain chain) {
-        request.setAttribute(HttpSessionFilter.class.getName(), true);
-        try {
-            for (HttpSessionIdResolver resolver : resolvers) {
-                List<String> ids = resolver.resolveIds(request);
-                if (CollectionUtils.isNotEmpty(ids)) {
-                    String id = ids.get(0);
-                    Publisher<Optional<Session>> sessionLookup = Publishers.fromCompletableFuture(() -> sessionStore.findSession(id));
-                    Flux<MutableHttpResponse<?>> storeSessionInAttributes = Flux
-                        .from(sessionLookup)
-                        .switchMap(session -> {
-                            session.ifPresent(entries -> request.getAttributes().put(SESSION_ATTRIBUTE, entries));
-                            return chain.proceed(request);
-                        });
-                    return encodeSessionId(request, storeSessionInAttributes);
-                }
-            }
-        } catch (IllegalArgumentException e) {
-            return Flux.error(new HttpStatusException(HttpStatus.BAD_REQUEST, e.getMessage()));
-        }
-        return encodeSessionId(request, chain.proceed(request));
-    }
-
-    private Publisher<MutableHttpResponse<?>> encodeSessionId(HttpRequest<?> request, Publisher<MutableHttpResponse<?>> responsePublisher) {
-        Flux<SessionAndResponse> responseFlowable = Flux.from(responsePublisher)
-            .switchMap(response -> {
-
-                Optional<MethodExecutionHandle> routeMatch = request.getAttribute(HttpAttributes.ROUTE_MATCH, MethodExecutionHandle.class);
-                Optional<?> body = response.getBody();
-
-                String sessionAttr;
-
-                if (body.isPresent()) {
-                    sessionAttr = routeMatch.flatMap(m -> {
-                        if (!m.hasAnnotation(SessionValue.class)) {
-                            return Optional.empty();
-                        } else {
-                            String attributeName = m.stringValue(SessionValue.class).orElse(null);
-                            if (!StringUtils.isEmpty(attributeName)) {
-                                return Optional.of(attributeName);
-                            } else {
-                                throw new InternalServerException("@SessionValue on a return type must specify an attribute name");
-                            }
-                        }
-                    }).orElse(null);
-                } else {
-                    sessionAttr = null;
-                }
-
-                Optional<Session> opt = request.getAttributes().get(SESSION_ATTRIBUTE, Session.class);
-                if (opt.isPresent()) {
-                    Session session = opt.get();
-                    if (sessionAttr != null) {
-                        session.put(sessionAttr, body.get());
-                    }
-
-                    if (session.isNew() || session.isModified()) {
-                        return Flux.from(Publishers.fromCompletableFuture(() -> sessionStore.save(session)))
-                            .map(s -> new SessionAndResponse(Optional.of(s), response));
-                    }
-                } else if (sessionAttr != null) {
-                    Session newSession = sessionStore.newSession();
-                    newSession.put(sessionAttr, body.get());
-                    return Flux
-                        .from(Publishers.fromCompletableFuture(() -> sessionStore.save(newSession)))
-                        .map(s -> new SessionAndResponse(Optional.of(s), response));
-                }
-                return Flux.just(new SessionAndResponse(opt, response));
-            });
-
-        return responseFlowable.map(sessionAndResponse -> {
-            Optional<Session> session = sessionAndResponse.session;
-            MutableHttpResponse<?> response = sessionAndResponse.response;
-            if (session.isPresent()) {
-                Session s = session.get();
-                for (HttpSessionIdEncoder encoder : encoders) {
-                    encoder.encodeId(request, response, s);
-                }
-            }
-            return response;
-        });
+    /**
+     * Resolve an existing HTTP session before the matched route is invoked.
+     *
+     * @param request The request
+     * @return The request to continue with
+     */
+    @RequestFilter
+    public CompletionStage<HttpRequest<?>> filterRequest(HttpRequest<?> request) {
+        return loadSessionIntoRequest(request);
     }
 
     /**
-     * Store the session and the response.
+     * Persist and encode the HTTP session after the matched route has produced a response.
+     *
+     * @param request The request
+     * @param response The response
+     * @param routeInfo The matched route information, if any
+     * @return The response to continue with
      */
-    class SessionAndResponse {
-        final Optional<Session> session;
-        final MutableHttpResponse<?> response;
+    @ResponseFilter
+    public CompletionStage<MutableHttpResponse<?>> filterResponse(HttpRequest<?> request,
+                                                                  MutableHttpResponse<?> response,
+                                                                  @Nullable RouteInfo<?> routeInfo) {
+        MethodExecutionHandle<?, ?> routeMatch = routeInfo instanceof MethodBasedRouteInfo<?, ?> methodBasedRouteInfo
+            ? methodBasedRouteInfo.getTargetMethod()
+            : null;
+        return encodeSessionInResponse(request, response, routeMatch);
+    }
 
-        /**
-         * Constructor.
-         *
-         * @param session The optional session
-         * @param response The mutable HTTP response
-         */
-        SessionAndResponse(Optional<Session> session, MutableHttpResponse<?> response) {
-            this.session = session;
-            this.response = response;
+    private CompletionStage<HttpRequest<?>> loadSessionIntoRequest(HttpRequest<?> request) {
+        request.setAttribute(HttpSessionFilter.class.getName(), true);
+        try {
+            String id = findSessionId(request);
+            if (id != null) {
+                return sessionStore.findSession(id)
+                    .thenApply(session -> {
+                        session.ifPresent(entries -> request.getAttributes().put(SESSION_ATTRIBUTE, entries));
+                        return request;
+                    });
+            }
+        } catch (IllegalArgumentException e) {
+            throw new HttpStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
+        return CompletableFuture.completedFuture(request);
+    }
+
+    private @Nullable String findSessionId(HttpRequest<?> request) {
+        for (HttpSessionIdResolver resolver : resolvers) {
+            List<String> ids = resolver.resolveIds(request);
+            if (CollectionUtils.isNotEmpty(ids)) {
+                return ids.getFirst();
+            }
+        }
+        return null;
+    }
+
+    private CompletionStage<MutableHttpResponse<?>> encodeSessionInResponse(HttpRequest<?> request,
+                                                                            MutableHttpResponse<?> response,
+                                                                            @Nullable MethodExecutionHandle<?, ?> routeMatch) {
+        Optional<?> body = response.getBody();
+        String sessionAttr = getSessionAttr(routeMatch, body.isPresent());
+
+        Optional<Session> opt = request.getAttributes().get(SESSION_ATTRIBUTE, Session.class);
+        if (opt.isPresent()) {
+            Session session = opt.get();
+            if (sessionAttr != null) {
+                session.put(sessionAttr, body.get());
+            }
+
+            if (session.isNew() || session.isModified()) {
+                return saveAndEncodeSession(request, response, session);
+            }
+        } else if (sessionAttr != null) {
+            Session newSession = sessionStore.newSession();
+            newSession.put(sessionAttr, body.get());
+            return saveAndEncodeSession(request, response, newSession);
+        }
+        encodeSessionId(request, response, opt);
+        return CompletableFuture.completedFuture(response);
+    }
+
+    private static @Nullable String getSessionAttr(@Nullable MethodExecutionHandle<?, ?> routeMatch, boolean hasBody) {
+        String sessionAttr;
+        if (hasBody) {
+            sessionAttr = Optional.ofNullable(routeMatch).flatMap(m -> {
+                if (!m.hasAnnotation(SessionValue.class)) {
+                    return Optional.empty();
+                } else {
+                    String attributeName = m.stringValue(SessionValue.class).orElse(null);
+                    if (!StringUtils.isEmpty(attributeName)) {
+                        return Optional.of(attributeName);
+                    } else {
+                        throw new InternalServerException("@SessionValue on a return type must specify an attribute name");
+                    }
+                }
+            }).orElse(null);
+        } else {
+            sessionAttr = null;
+        }
+        return sessionAttr;
+    }
+
+    private CompletionStage<MutableHttpResponse<?>> saveAndEncodeSession(HttpRequest<?> request,
+                                                                         MutableHttpResponse<?> response,
+                                                                         Session session) {
+        return sessionStore.save(session)
+            .thenApply(savedSession -> {
+                encodeSessionId(request, response, Optional.of(savedSession));
+                return response;
+            });
+    }
+
+    private void encodeSessionId(HttpRequest<?> request,
+                                 MutableHttpResponse<?> response,
+                                 Optional<Session> session) {
+        session.ifPresent(s -> {
+            for (HttpSessionIdEncoder encoder : encoders) {
+                encoder.encodeId(request, response, s);
+            }
+        });
     }
 }

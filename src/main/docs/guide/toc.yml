@@ -1,5 +1,6 @@
 introduction:
   title: Introduction
+breaks: Breaking Changes
 sessions:
   title: Http Sessions
   sessionFilter: Session Filter
