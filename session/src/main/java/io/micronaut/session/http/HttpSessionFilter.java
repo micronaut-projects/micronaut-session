@@ -34,6 +34,7 @@ import io.micronaut.session.SessionStore;
 import io.micronaut.session.annotation.SessionValue;
 import io.micronaut.web.router.MethodBasedRouteInfo;
 import io.micronaut.web.router.RouteInfo;
+import jakarta.inject.Inject;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
@@ -73,8 +74,22 @@ public class HttpSessionFilter implements Ordered {
      * @param sessionStore The session store
      * @param resolvers The HTTP session id resolvers
      * @param encoders The HTTP session id encoders
+     */
+    public HttpSessionFilter(SessionStore<Session> sessionStore,
+                             HttpSessionIdResolver[] resolvers,
+                             HttpSessionIdEncoder[] encoders) {
+        this(sessionStore, resolvers, encoders, new HttpSessionFilterConfigurationProperties());
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param sessionStore The session store
+     * @param resolvers The HTTP session id resolvers
+     * @param encoders The HTTP session id encoders
      * @param configuration The filter configuration
      */
+    @Inject
     public HttpSessionFilter(SessionStore<Session> sessionStore,
                              HttpSessionIdResolver[] resolvers,
                              HttpSessionIdEncoder[] encoders,
