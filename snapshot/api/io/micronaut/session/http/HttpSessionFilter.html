@@ -65,6 +65,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#constructor-detail" tabindex="0">Constructor Details</a>
 <ol class="toc-list">
 <li><a href="#%3Cinit%3E(io.micronaut.session.SessionStore,io.micronaut.session.http.HttpSessionIdResolver%5B%5D,io.micronaut.session.http.HttpSessionIdEncoder%5B%5D)" tabindex="0">HttpSessionFilter(SessionStore, HttpSessionIdResolver[], HttpSessionIdEncoder[])</a></li>
+<li><a href="#%3Cinit%3E(io.micronaut.session.SessionStore,io.micronaut.session.http.HttpSessionIdResolver%5B%5D,io.micronaut.session.http.HttpSessionIdEncoder%5B%5D,io.micronaut.session.http.HttpSessionFilterConfiguration)" tabindex="0">HttpSessionFilter(SessionStore, HttpSessionIdResolver[], HttpSessionIdEncoder[], HttpSessionFilterConfiguration)</a></li>
 </ol>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
@@ -94,8 +95,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="annotations">@Requires(property="micronaut.session.filter.enabled",
           notEquals="false",
           defaultValue="true")
-@ServerFilter(patternStyle=REGEX,
-              value="${micronaut.session.filter.regex-pattern:^.*$}")
+@ServerFilter("/**")
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">HttpSessionFilter</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements io.micronaut.core.order.Ordered</span></div>
@@ -148,6 +148,13 @@ the response.</div>
  <a href="HttpSessionIdResolver.html" title="interface in io.micronaut.session.http">HttpSessionIdResolver</a>[]&nbsp;resolvers,
  <a href="HttpSessionIdEncoder.html" title="interface in io.micronaut.session.http">HttpSessionIdEncoder</a>[]&nbsp;encoders)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Constructor.</div>
+</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(io.micronaut.session.SessionStore,io.micronaut.session.http.HttpSessionIdResolver%5B%5D,io.micronaut.session.http.HttpSessionIdEncoder%5B%5D,io.micronaut.session.http.HttpSessionFilterConfiguration)" class="member-name-link">HttpSessionFilter</a><wbr>(<a href="../SessionStore.html" title="interface in io.micronaut.session">SessionStore</a>&lt;<a href="../Session.html" title="interface in io.micronaut.session">Session</a>&gt;&nbsp;sessionStore,
+ <a href="HttpSessionIdResolver.html" title="interface in io.micronaut.session.http">HttpSessionIdResolver</a>[]&nbsp;resolvers,
+ <a href="HttpSessionIdEncoder.html" title="interface in io.micronaut.session.http">HttpSessionIdEncoder</a>[]&nbsp;encoders,
+ <a href="HttpSessionFilterConfiguration.html" title="interface in io.micronaut.session.http">HttpSessionFilterConfiguration</a>&nbsp;configuration)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Constructor.</div>
 </div>
 </div>
@@ -235,6 +242,26 @@ the response.</div>
 <dd><code>sessionStore</code> - The session store</dd>
 <dd><code>resolvers</code> - The HTTP session id resolvers</dd>
 <dd><code>encoders</code> - The HTTP session id encoders</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(io.micronaut.session.SessionStore,io.micronaut.session.http.HttpSessionIdResolver[],io.micronaut.session.http.HttpSessionIdEncoder[],io.micronaut.session.http.HttpSessionFilterConfiguration)">
+<h3>HttpSessionFilter</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations">@Inject
+</span><span class="modifiers">public</span>&nbsp;<span class="element-name">HttpSessionFilter</span><wbr><span class="parameters">(<a href="../SessionStore.html" title="interface in io.micronaut.session">SessionStore</a>&lt;<a href="../Session.html" title="interface in io.micronaut.session">Session</a>&gt;&nbsp;sessionStore,
+ <a href="HttpSessionIdResolver.html" title="interface in io.micronaut.session.http">HttpSessionIdResolver</a>[]&nbsp;resolvers,
+ <a href="HttpSessionIdEncoder.html" title="interface in io.micronaut.session.http">HttpSessionIdEncoder</a>[]&nbsp;encoders,
+ <a href="HttpSessionFilterConfiguration.html" title="interface in io.micronaut.session.http">HttpSessionFilterConfiguration</a>&nbsp;configuration)</span></div>
+<div class="block">Constructor.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>sessionStore</code> - The session store</dd>
+<dd><code>resolvers</code> - The HTTP session id resolvers</dd>
+<dd><code>encoders</code> - The HTTP session id encoders</dd>
+<dd><code>configuration</code> - The filter configuration</dd>
 </dl>
 </div>
 </section>
