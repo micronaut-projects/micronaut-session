@@ -15,7 +15,7 @@
     <script>hljs.initHighlightingOnLoad();</script>
     <link rel="stylesheet" href="../css/multi-language-sample.css"/>
     <script src="../js/docs.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.13/clipboard.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
     <script type="text/javascript">
         function addJsClass(el) {
             var classes = document.body.className.split(" ");
@@ -23,7 +23,9 @@
             document.body.className = classes.join(" ");
         }
     </script>
-
+    <style type="text/css">
+        .lang-java { display: block }; .lang-python { display: block }; .lang-kotlin { display: block }; .lang-groovy { display: block }; 
+    </style>
 </head>
 
 <body class="body" id="docs" onload="addJsClass();" onhashchange="highlightMenu()">
@@ -46,11 +48,13 @@
                                 
                                 <div class="toc-item" style="margin-left:0"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#sessions"><strong>2</strong><span>Http Sessions</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#breaks"><strong>2</strong><span>Breaking Changes</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#releaseHistory"><strong>3</strong><span>Release History</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#sessions"><strong>3</strong><span>Http Sessions</span></a></div>
                                 
-                                <div class="toc-item" style="margin-left:0"><a href="#repository"><strong>4</strong><span>Repository</span></a></div>
+                                <div class="toc-item" style="margin-left:0"><a href="#releaseHistory"><strong>4</strong><span>Release History</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#repository"><strong>5</strong><span>Repository</span></a></div>
                                 
                             </div>
                         </div>
@@ -83,27 +87,29 @@
         
         <div class="toc-item" style="margin-left:0px" id="toc-item-introduction"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-sessions"><a href="#sessions"><strong>2</strong><span>Http Sessions</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-breaks"><a href="#breaks"><strong>2</strong><span>Breaking Changes</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionFilter"><a href="#sessionFilter"><strong>2.1</strong><span>Session Filter</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-sessions"><a href="#sessions"><strong>3</strong><span>Http Sessions</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-enablingSessions"><a href="#enablingSessions"><strong>2.2</strong><span>Enabling Sessions</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionFilter"><a href="#sessionFilter"><strong>3.1</strong><span>Session Filter</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-redisSessions"><a href="#redisSessions"><strong>2.3</strong><span>Redis Sessions</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-enablingSessions"><a href="#enablingSessions"><strong>3.2</strong><span>Enabling Sessions</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-configuringSessionResolution"><a href="#configuringSessionResolution"><strong>2.4</strong><span>Configuring Session Resolution</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-redisSessions"><a href="#redisSessions"><strong>3.3</strong><span>Redis Sessions</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-workingWithSessions"><a href="#workingWithSessions"><strong>2.5</strong><span>Working with Sessions</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-configuringSessionResolution"><a href="#configuringSessionResolution"><strong>3.4</strong><span>Configuring Session Resolution</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionClients"><a href="#sessionClients"><strong>2.6</strong><span>Session Clients</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-workingWithSessions"><a href="#workingWithSessions"><strong>3.5</strong><span>Working with Sessions</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionValue"><a href="#sessionValue"><strong>2.7</strong><span>Using @SessionValue</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionClients"><a href="#sessionClients"><strong>3.6</strong><span>Session Clients</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionEvents"><a href="#sessionEvents"><strong>2.8</strong><span>Session Events</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionValue"><a href="#sessionValue"><strong>3.7</strong><span>Using @SessionValue</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-releaseHistory"><a href="#releaseHistory"><strong>3</strong><span>Release History</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-sessionEvents"><a href="#sessionEvents"><strong>3.8</strong><span>Session Events</span></a></div>
         
-        <div class="toc-item" style="margin-left:0px" id="toc-item-repository"><a href="#repository"><strong>4</strong><span>Repository</span></a></div>
+        <div class="toc-item" style="margin-left:0px" id="toc-item-releaseHistory"><a href="#releaseHistory"><strong>4</strong><span>Release History</span></a></div>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-repository"><a href="#repository"><strong>5</strong><span>Repository</span></a></div>
         
         </div>
     </div>
@@ -113,13 +119,13 @@
         <h1>Micronaut session</h1>
         <p></p>
         <p>HTTP Session support for Micronaut</p>
-        <p><strong>Version:</strong> 4.7.0 </p>
+        <p><strong>Version:</strong> 5.0.0 </p>
     </div>
     
 <h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/4.7.x/src/main/docs/guide/introduction.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/introduction.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -129,10 +135,23 @@
 <p>By default, Micronaut is a stateless HTTP server, however depending on your application requirements you may need the notion of HTTP sessions.</p>
 </div>
 
-<h1 id="sessions"><a class="anchor" href="#sessions"></a>2 Http Sessions</h1>
+<h1 id="breaks"><a class="anchor" href="#breaks"></a>2 Breaking Changes</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/4.7.x/src/main/docs/guide/sessions.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/breaks.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>For Micronaut Session 5.x, <code>HttpSessionFilter</code> is a <a href="https://docs.micronaut.io/latest/guide/#filtermethods">method-based <code>@ServerFilter</code></a> and no longer implements <a href="https://docs.micronaut.io/latest/guide/#httpServerFilter"><code>HttpServerFilter</code></a>.</p>
+</div>
+
+<h1 id="sessions"><a class="anchor" href="#sessions"></a>3 Http Sessions</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/sessions.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -152,10 +171,10 @@
 </ul>
 </div>
 
-<h2 id="sessionFilter"><a class="anchor" href="#sessionFilter"></a>2.1 Session Filter</h2>
+<h2 id="sessionFilter"><a class="anchor" href="#sessionFilter"></a>3.1 Session Filter</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/4.7.x/src/main/docs/guide/sessions/sessionFilter.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/sessions/sessionFilter.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -171,15 +190,17 @@
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. Configuration Properties for <a href="../api/io/micronaut/session/http/HttpSessionFilterConfigurationProperties.html">HttpSessionFilterConfigurationProperties</a></caption>
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Property</th>
 <th class="tableblock halign-left valign-top">Type</th>
 <th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Default value</th>
 </tr>
 </thead>
 <tbody>
@@ -187,19 +208,21 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.session.filter.regex-pattern</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">java.lang.String</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Pattern the {@link HttpSessionFilter} should match. Default value "^.*$".</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>micronaut.session.filter.enabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">boolean</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Whether the {@link HttpSessionFilter} is enabled. Default value true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enables {@link HttpSessionFilter}. Default value true</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
 </table>
 
-<h2 id="enablingSessions"><a class="anchor" href="#enablingSessions"></a>2.2 Enabling Sessions</h2>
+<h2 id="enablingSessions"><a class="anchor" href="#enablingSessions"></a>3.2 Enabling Sessions</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/4.7.x/src/main/docs/guide/sessions/enablingSessions.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/sessions/enablingSessions.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -222,13 +245,14 @@
     &lt;artifactId&gt;micronaut-session&lt;/artifactId&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
-</div></p>
+</div>
+</p>
 </div>
 
-<h2 id="redisSessions"><a class="anchor" href="#redisSessions"></a>2.3 Redis Sessions</h2>
+<h2 id="redisSessions"><a class="anchor" href="#redisSessions"></a>3.3 Redis Sessions</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/4.7.x/src/main/docs/guide/sessions/redisSessions.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/sessions/redisSessions.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -336,10 +360,10 @@ micronaut {
 </div>
 </div>
 
-<h2 id="configuringSessionResolution"><a class="anchor" href="#configuringSessionResolution"></a>2.4 Configuring Session Resolution</h2>
+<h2 id="configuringSessionResolution"><a class="anchor" href="#configuringSessionResolution"></a>3.4 Configuring Session Resolution</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/4.7.x/src/main/docs/guide/sessions/configuringSessionResolution.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/sessions/configuringSessionResolution.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -427,10 +451,10 @@ micronaut.session.http.header=true</code></pre>
 <p>The above configuration enables header resolution, but disables cookie resolution. You can also configure header and cookie names.</p>
 </div>
 
-<h2 id="workingWithSessions"><a class="anchor" href="#workingWithSessions"></a>2.5 Working with Sessions</h2>
+<h2 id="workingWithSessions"><a class="anchor" href="#workingWithSessions"></a>3.5 Working with Sessions</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/4.7.x/src/main/docs/guide/sessions/workingWithSessions.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/sessions/workingWithSessions.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -446,7 +470,7 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.session.Session;
 import io.micronaut.session.annotation.SessionValue;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 @Controller("/shopping")
 public class ShoppingController {
@@ -461,34 +485,6 @@ public class ShoppingController {
         });
         cart.getItems().add(name);
         return cart;
-    }
-
-}</code></pre>
-</div>
-</div>
-<div class="listingblock multi-language-sample">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Get
-import io.micronaut.http.annotation.Post
-import io.micronaut.session.Session
-import io.micronaut.session.annotation.SessionValue
-
-import jakarta.annotation.Nullable
-
-@Controller("/shopping")
-class ShoppingController {
-    private static final String ATTR_CART = "cart" // <b class="conum">(1)</b>
-
-    @Post("/cart/{name}")
-    Cart addItem(Session session, String name) { // <b class="conum">(2)</b>
-        Cart cart = session.get(ATTR_CART, Cart).orElseGet({ -&gt; // <b class="conum">(3)</b>
-            Cart newCart = new Cart()
-            session.put(ATTR_CART, newCart) // <b class="conum">(4)</b>
-            newCart
-        })
-        cart.items &lt;&lt; name
-        cart
     }
 
 }</code></pre>
@@ -519,6 +515,34 @@ class ShoppingController {
         }
         cart.items.add(name)
         return cart
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.Post
+import io.micronaut.session.Session
+import io.micronaut.session.annotation.SessionValue
+
+import jakarta.annotation.Nullable
+
+@Controller("/shopping")
+class ShoppingController {
+    private static final String ATTR_CART = "cart" // <b class="conum">(1)</b>
+
+    @Post("/cart/{name}")
+    Cart addItem(Session session, String name) { // <b class="conum">(2)</b>
+        Cart cart = session.get(ATTR_CART, Cart).orElseGet({ -&gt; // <b class="conum">(3)</b>
+            Cart newCart = new Cart()
+            session.put(ATTR_CART, newCart) // <b class="conum">(4)</b>
+            newCart
+        })
+        cart.items &lt;&lt; name
+        cart
     }
 
 }</code></pre>
@@ -564,8 +588,8 @@ void clearCart(@Nullable Session session) {
 <div class="listingblock multi-language-sample">
 <div class="title">Using @Nullable with Sessions</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Post("/cart/clear")
-void clearCart(@Nullable Session session) {
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Post("/cart/clear")
+internal fun clearCart(session: Session?) {
     session?.remove(ATTR_CART)
 }</code></pre>
 </div>
@@ -573,8 +597,8 @@ void clearCart(@Nullable Session session) {
 <div class="listingblock multi-language-sample">
 <div class="title">Using @Nullable with Sessions</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Post("/cart/clear")
-internal fun clearCart(session: Session?) {
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Post("/cart/clear")
+void clearCart(@Nullable Session session) {
     session?.remove(ATTR_CART)
 }</code></pre>
 </div>
@@ -583,10 +607,10 @@ internal fun clearCart(session: Session?) {
 <p>The above method only injects a new <a href="../api/io/micronaut/session/Session.html">Session</a> if one already exists.</p>
 </div>
 
-<h2 id="sessionClients"><a class="anchor" href="#sessionClients"></a>2.6 Session Clients</h2>
+<h2 id="sessionClients"><a class="anchor" href="#sessionClients"></a>3.6 Session Clients</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/4.7.x/src/main/docs/guide/sessions/sessionClients.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/sessions/sessionClients.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -651,10 +675,10 @@ cart = response.body()</code></pre>
 </table>
 </div>
 
-<h2 id="sessionValue"><a class="anchor" href="#sessionValue"></a>2.7 Using @SessionValue</h2>
+<h2 id="sessionValue"><a class="anchor" href="#sessionValue"></a>3.7 Using @SessionValue</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/4.7.x/src/main/docs/guide/sessions/sessionValue.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/sessions/sessionValue.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -679,20 +703,20 @@ Cart viewCart(@SessionValue @Nullable Cart cart) { // <b class="conum">(2)</b>
 <div class="listingblock multi-language-sample">
 <div class="title">Using @SessionValue</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Get("/cart")
-@SessionValue("cart") // <b class="conum">(1)</b>
-Cart viewCart(@SessionValue @Nullable Cart cart) { // <b class="conum">(2)</b>
-    cart ?: new Cart()
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Get("/cart")
+@SessionValue(ATTR_CART) // <b class="conum">(1)</b>
+internal fun viewCart(@SessionValue cart: Cart?): Cart { // <b class="conum">(2)</b>
+    return cart ?: Cart()
 }</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="title">Using @SessionValue</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">@Get("/cart")
-@SessionValue(ATTR_CART) // <b class="conum">(1)</b>
-internal fun viewCart(@SessionValue cart: Cart?): Cart { // <b class="conum">(2)</b>
-    return cart ?: Cart()
+<pre class="highlightjs highlight"><code class="language-groovy hljs" data-lang="groovy">@Get("/cart")
+@SessionValue("cart") // <b class="conum">(1)</b>
+Cart viewCart(@SessionValue @Nullable Cart cart) { // <b class="conum">(2)</b>
+    cart ?: new Cart()
 }</code></pre>
 </div>
 </div>
@@ -709,10 +733,10 @@ internal fun viewCart(@SessionValue cart: Cart?): Cart { // <b class="conum">(2)
 </table>
 </div>
 
-<h2 id="sessionEvents"><a class="anchor" href="#sessionEvents"></a>2.8 Session Events</h2>
+<h2 id="sessionEvents"><a class="anchor" href="#sessionEvents"></a>3.8 Session Events</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/4.7.x/src/main/docs/guide/sessions/sessionEvents.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/sessions/sessionEvents.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -756,10 +780,10 @@ internal fun viewCart(@SessionValue cart: Cart?): Cart { // <b class="conum">(2)
 </tbody>
 </table>
 
-<h1 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>3 Release History</h1>
+<h1 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>4 Release History</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/4.7.x/src/main/docs/guide/releaseHistory.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/releaseHistory.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
@@ -772,10 +796,10 @@ internal fun viewCart(@SessionValue cart: Cart?): Cart { // <b class="conum">(2)
 <p><a href="https://github.com/micronaut-projects/micronaut-session/releases">https://github.com/micronaut-projects/micronaut-session/releases</a></p>
 </div>
 
-<h1 id="repository"><a class="anchor" href="#repository"></a>4 Repository</h1>
+<h1 id="repository"><a class="anchor" href="#repository"></a>5 Repository</h1>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/4.7.x/src/main/docs/guide/repository.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-session/edit/5.0.x/src/main/docs/guide/repository.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
