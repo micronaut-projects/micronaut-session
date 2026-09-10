@@ -39,7 +39,7 @@ class ShoppingControllerTest: StringSpec() {
         "testSessionValueUsedOnReturnValue" {
             // tag::view[]
             var response = Flux.from(client.exchange(HttpRequest.GET<Cart>("/shopping/cart"), Cart::class.java)) // <1>
-                                 .blockFirst()
+                                 .blockFirst()!!
             var cart = response.body()
 
             assertNotNull(response.header(HttpHeaders.AUTHORIZATION_INFO)) // <2>
@@ -53,7 +53,7 @@ class ShoppingControllerTest: StringSpec() {
 
             response = Flux.from(client.exchange(HttpRequest.POST("/shopping/cart/Apple", "")
                              .header(HttpHeaders.AUTHORIZATION_INFO, sessionId), Cart::class.java)) // <2>
-                             .blockFirst()
+                             .blockFirst()!!
             cart = response.body()
             // end::add[]
 
@@ -62,7 +62,7 @@ class ShoppingControllerTest: StringSpec() {
 
             response = Flux.from(client.exchange(HttpRequest.GET<Any>("/shopping/cart")
                              .header(HttpHeaders.AUTHORIZATION_INFO, sessionId), Cart::class.java))
-                             .blockFirst()
+                             .blockFirst()!!
             cart = response.body()
 
             response.header(HttpHeaders.AUTHORIZATION_INFO)
