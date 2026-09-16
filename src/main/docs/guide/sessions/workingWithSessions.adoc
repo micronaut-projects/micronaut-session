@@ -7,6 +7,11 @@ snippet::io.micronaut.docs.session.ShoppingController[tags="imports,class,add,en
 <3> The `cart` attribute is retrieved
 <4> Otherwise a new `Cart` instance is created and stored in the session
 
+[.lang-python]
+****
+A `Cart` retrieved from the api:session.Session[] is a Java-side view of the Python object whose `items` attribute is bridged as a copy of the underlying list, so the Python example assigns a new list (`cart.items = cart.items + [name]`) instead of appending to it in place.
+****
+
 Note that because the api:session.Session[] is declared as a required parameter, to execute the controller action a api:session.Session[] will be created and saved to the api:session.SessionStore[].
 
 If you don't want to create unnecessary sessions, declare the api:session.Session[] as `@Nullable` in which case a session will not be created and saved unnecessarily. For example:
