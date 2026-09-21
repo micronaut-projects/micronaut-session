@@ -33,7 +33,7 @@ class ShoppingController:
         if cart is None:
             cart = Cart()
             session.put(ATTR_CART, cart)  # <4>
-        cart.items = cart.items + [name]
+        cart.items.append(name)
         return cart
     # end::add[]
 
