@@ -2,12 +2,9 @@ To store api:session.Session[] instances in Redis, use the https://micronaut-pro
 
 To quickly get up and running with Redis sessions you must also have the `redis-lettuce` dependency in your build:
 
-.build.gradle
-[source,groovy]
-----
-compile "io.micronaut-session:micronaut-session"
-compile "io.micronaut.redis:micronaut-redis-lettuce"
-----
+dependency:micronaut-session[groupId=io.micronaut.session]
+
+dependency:micronaut-redis-lettuce[groupId=io.micronaut.redis]
 
 And enable Redis sessions via configuration in the application configuration file:
 

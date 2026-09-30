@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ShoppingControllerTest {
+class ShoppingControllerSpec {
 
     private static EmbeddedServer server;
     private static HttpClient client;
