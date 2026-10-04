@@ -350,8 +350,11 @@ micronaut:
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">redis = {uri = "redis://localhost:6379"}
-micronaut = {session = {http = {redis = {enabled = true}}}}</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[redis]
+uri = "redis://localhost:6379"
+
+[micronaut.session.http.redis]
+enabled = true</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -447,7 +450,9 @@ micronaut.session.http.header=true</code></pre>
 </div>
 <div class="listingblock multi-language-sample">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">micronaut = {session = {http = {cookie = false, header = true}}}</code></pre>
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">[micronaut.session.http]
+cookie = false
+header = true</code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
