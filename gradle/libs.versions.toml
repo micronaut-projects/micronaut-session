@@ -1,6 +1,6 @@
 [versions]
-micronaut = "5.2.20"
-micronaut-cache = "6.1.1"
+micronaut = "5.2.23"
+micronaut-cache = "6.2.0"
 micronaut-logging = "2.0.0"
 micronaut-serde = "3.2.6"
 
@@ -13,4 +13,3 @@ micronaut-serde = { module = "io.micronaut.serde:micronaut-serde-bom", version.r
 [bundles]
 
 [plugins]
-
